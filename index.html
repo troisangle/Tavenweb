@@ -1,1 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taven — High-Performance Task Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080910;
+            --surface: #0f1015;
+            --surface2: #161820;
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.14);
+            --text: #eeeef0;
+            --text-muted: #6b6d7a;
+            --text-dim: #9293a0;
+            --blue: #3b82f6;
+            --blue-bright: #60a5fa;
+            --cyan: #22d3ee;
+            --accent: #4f8ef7;
+            --green: #34d399;
+            --purple: #a78bfa;
+        }
 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─── NOISE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ─── BACKGROUND GLOWS ─── */
+        .glow-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.18;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+        .orb1 { width: 700px; height: 700px; background: radial-gradient(circle, #3b82f6, transparent); top: -200px; left: -200px; animation-duration: 22s; }
+        .orb2 { width: 600px; height: 600px; background: radial-gradient(circle, #6366f1, transparent); bottom: -100px; right: -100px; animation-duration: 18s; animation-delay: -5s; }
+        .orb3 { width: 400px; height: 400px; background: radial-gradient(circle, #22d3ee, transparent); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-duration: 25s; animation-delay: -10s; opacity: 0.08; }
+
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(40px, 60px) scale(1.1); }
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            height: 68px;
+            background: rgba(8, 9, 16, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+        .nav-logo span {
+            background: linear-gradient(120deg, var(--blue-bright), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav-links a.active { color: var(--text); background: rgba(255,255,255,0.07); }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 22px;
+            background: var(--blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-cta:hover { background: var(--blue-bright); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(59,130,246,0.35); }
+        .btn-cta svg { width: 16px; height: 16px; }
+
+        /* ─── PAGES ─── */
+        .page { display: none; position: relative; z-index: 1; }
+        .page.active { display: block; animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── ABOUT PAGE ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 10px;
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--blue-bright);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyan);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        .hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+        }
+        .hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--blue-bright) 0%, var(--cyan) 50%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            max-width: 520px;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            font-weight: 400;
+            line-height: 1.7;
+            margin-bottom: 44px;
+            animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--blue) 0%, #6366f1 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(59,130,246,0.45); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { color: var(--text); border-color: var(--border-hover); background: rgba(255,255,255,0.04); }
+
+        /* ─── MOCK WIDGET ─── */
+        .hero-widget {
+            margin: 70px auto 0;
+            max-width: 420px;
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .widget-header-text { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+        .widget-score {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            background: rgba(34,211,238,0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            animation: slideIn 0.5s ease both;
+        }
+        .task-item:last-child { border-bottom: none; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .task-item:nth-child(1) { animation-delay: 0.5s; }
+        .task-item:nth-child(2) { animation-delay: 0.65s; }
+        .task-item:nth-child(3) { animation-delay: 0.8s; }
+        .task-item:nth-child(4) { animation-delay: 0.95s; }
+
+        .task-check {
+            width: 20px; height: 20px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .task-check.done { background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3); }
+        .task-check.done::after { content: '✓'; font-size: 0.65rem; color: var(--green); }
+        .task-check.pending { background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+
+        .task-info { flex: 1; min-width: 0; }
+        .task-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+        .task-name.done { color: var(--text-muted); text-decoration: line-through; text-decoration-color: var(--border-hover); }
+        .task-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+        .priority-pill {
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: 'DM Mono', monospace;
+            padding: 3px 8px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+        .p-high { background: rgba(239,68,68,0.12); color: #f87171; }
+        .p-med { background: rgba(251,191,36,0.12); color: #fbbf24; }
+        .p-low { background: rgba(59,130,246,0.12); color: var(--blue-bright); }
+
+        /* ─── FEATURES ─── */
+        .features {
+            padding: 80px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59,130,246,0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .feature-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card.wide { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
+
+        .feature-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        .icon-blue { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); }
+        .icon-cyan { background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2); }
+        .icon-purple { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); }
+        .icon-green { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+
+        .feature-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        /* Streak mini-chart */
+        .streak-chart {
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+            height: 60px;
+            margin-top: 20px;
+        }
+        .bar {
+            flex: 1;
+            background: rgba(59,130,246,0.2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .bar.active { background: linear-gradient(180deg, var(--blue), var(--blue-bright)); }
+        .bar:hover { filter: brightness(1.3); }
+
+        /* ─── STATS ROW ─── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 60px 40px;
+            max-width: 920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .stat {
+            background: var(--surface);
+            padding: 36px 28px;
+            text-align: center;
+        }
+        .stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--text), var(--text-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+        /* ─── PRIVACY PAGE ─── */
+        .privacy-page {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+
+        .privacy-hero { margin-bottom: 60px; }
+        .privacy-hero h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1.0;
+            margin-bottom: 16px;
+        }
+        .privacy-hero h1 em {
+            font-style: italic;
+            color: var(--green);
+            -webkit-text-fill-color: var(--green);
+        }
+        .privacy-hero p { color: var(--text-dim); font-size: 0.9rem; }
+
+        .privacy-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+        .privacy-stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+        .privacy-stat-icon { font-size: 1.5rem; margin-bottom: 8px; }
+        .privacy-stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
+        .privacy-stat-value { font-size: 0.9rem; font-weight: 700; color: var(--green); }
+
+        .prose-section { margin-bottom: 40px; }
+        .prose-section h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .prose-section p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.75; }
+        .prose-section strong { color: var(--text); font-weight: 600; }
+        .prose-section .inline-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(52,211,153,0.1);
+            border: 1px solid rgba(52,211,153,0.2);
+            color: var(--green);
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'DM Mono', monospace;
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .contact-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 6px; }
+        .contact-card p { font-size: 0.9rem; color: var(--text-muted); }
+        .btn-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            background: rgba(59,130,246,0.12);
+            border: 1px solid rgba(59,130,246,0.25);
+            color: var(--blue-bright);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .btn-email:hover { background: rgba(59,130,246,0.2); transform: translateY(-1px); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100%;
+        }
+        .footer-brand {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        .footer-brand span { color: var(--blue-bright); }
+        footer p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 700px) {
+            nav { padding: 0 20px; }
+            .hero { padding: 100px 24px 60px; }
+            .features { padding: 60px 24px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .feature-card.wide { grid-column: span 1; grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr; margin: 40px 24px; }
+            .privacy-page { padding: 100px 24px 60px; }
+            .privacy-summary { grid-template-columns: 1fr; }
+            .contact-card { flex-direction: column; align-items: flex-start; }
+            footer { flex-direction: column; gap: 8px; text-align: center; }
+            .hero-widget { margin-top: 50px; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glow-bg">
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+    <div class="glow-orb orb3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">Taven</div>
+    <ul class="nav-links">
+        <li><a onclick="showPage('about')" id="link-about" class="active">About</a></li>
+        <li><a onclick="showPage('privacy')" id="link-privacy">Privacy</a></li>
+    </ul>
+    <a href="https://apps.apple.com" class="btn-cta">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download
+    </a>
+</nav>
+
+<!-- ABOUT PAGE -->
+<div id="about" class="page active">
+
+    <section class="hero">
+        <div class="hero-badge">Now available on the App Store</div>
+
+        <h1>Your tasks,<br><em>intelligently</em><br>prioritized.</h1>
+        <p class="hero-sub">Taven goes beyond simple to-do lists. A smart algorithm surfaces what matters most, so you always know exactly what to work on next.</p>
+
+        <div class="hero-actions">
+            <a href="https://apps.apple.com" class="btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                Get on iOS — Free
+            </a>
+            <a href="#" onclick="showPage('privacy')" class="btn-secondary">
+                Privacy policy →
+            </a>
+        </div>
+
+        <!-- Task Widget Preview -->
+        <div class="hero-widget">
+            <div class="widget-header">
+                <span class="widget-header-text">Today's Focus</span>
+                <span class="widget-score">AI Score: 94</span>
+            </div>
+            <div class="task-item">
+                <div class="task-check pending"></div>
+                <div class="task-info">
+                    <div class="task-name">Finish Q3 design review</div>
+                    <div class="task-meta">Due today · 45 min</div>
+                </div>
+                <span class="priority-pill p-high">HIGH</span>
+            </div>
+            <div class="task-item">
+                <div class="task-check pending"></div>
+                <div class="task-info">
+                    <div class="task-name">Reply to team standup notes</div>
+                    <div class="task-meta">Due today · 10 min</div>
+                </div>
+                <span class="priority-pill p-med">MED</span>
+            </div>
+            <div class="task-item">
+                <div class="task-check done"></div>
+                <div class="task-info">
+                    <div class="task-name done">Morning workout</div>
+                    <div class="task-meta">Completed · Daily habit</div>
+                </div>
+                <span class="priority-pill p-low">DONE</span>
+            </div>
+            <div class="task-item">
+                <div class="task-check pending"></div>
+                <div class="task-info">
+                    <div class="task-name">Research new project tools</div>
+                    <div class="task-meta">No deadline · 30 min</div>
+                </div>
+                <span class="priority-pill p-low">LOW</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">On-device AI processing</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Data collected from you</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Recurring task patterns</div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="features">
+        <p class="section-label">Core Features</p>
+        <h2 class="section-title">Built for the way<br>you actually work.</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon icon-blue">⚡</div>
+                <h3>Intelligent Prioritization</h3>
+                <p>Stop guessing what to do next. A custom algorithm analyzes your tasks in real-time and surfaces exactly what you should tackle first — based on urgency, effort, and your habits.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-cyan">🔁</div>
+                <h3>Smart Recurrence</h3>
+                <p>From daily habits to yearly milestones, Taven handles complex recurring schedules effortlessly. Set it once, and it's always on your calendar.</p>
+            </div>
+
+            <div class="feature-card wide">
+                <div>
+                    <div class="feature-icon icon-purple">📊</div>
+                    <h3>Insightful Analytics</h3>
+                    <p>Visualize your productivity over days, weeks, or months. Built-in streak tracking and completion charts reveal your patterns, so you can build on what works and fix what doesn't.</p>
+                </div>
+                <div>
+                    <div class="streak-chart" id="streakChart"></div>
+                    <p style="font-size:0.75rem; color: var(--text-muted); margin-top: 10px; font-family: 'DM Mono', monospace;">Last 14 days — 11 completed</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-green">🔒</div>
+                <h3>Privacy First, Always</h3>
+                <p>Your data lives on your device. No accounts required. No cloud data collection. Everything processed locally — your tasks stay yours, period.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon icon-blue">☁️</div>
+                <h3>iCloud Sync</h3>
+                <p>Optionally sync seamlessly across all your Apple devices via your private iCloud account. End-to-end encrypted, accessible only to you.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- PRIVACY PAGE -->
+<div id="privacy" class="page">
+    <div class="privacy-page">
+        <div class="privacy-hero">
+            <h1>Privacy,<br>not as a<br><em>policy.</em><br>As a principle.</h1>
+            <p>Last updated: March 2026</p>
+        </div>
+
+        <div class="privacy-summary">
+            <div class="privacy-stat">
+                <div class="privacy-stat-icon">🚫</div>
+                <div class="privacy-stat-label">Data Used to Track You</div>
+                <div class="privacy-stat-value">None</div>
+            </div>
+            <div class="privacy-stat">
+                <div class="privacy-stat-icon">🔗</div>
+                <div class="privacy-stat-label">Data Linked to You</div>
+                <div class="privacy-stat-value">None</div>
+            </div>
+            <div class="privacy-stat">
+                <div class="privacy-stat-icon">📣</div>
+                <div class="privacy-stat-label">Third-Party Advertising</div>
+                <div class="privacy-stat-value">None</div>
+            </div>
+        </div>
+
+        <div class="prose-section">
+            <h2>1. Data Collection & Use</h2>
+            <p><strong>Taven</strong> is built on a "Privacy First" philosophy. We do not collect, store, or sell your personal information. All task data, notes, and schedules are stored locally on your device using <strong>SwiftData</strong>. <span class="inline-tag">✓ No accounts required</span></p>
+        </div>
+
+        <div class="prose-section">
+            <h2>2. Cloud Syncing</h2>
+            <p>If you choose to enable iCloud syncing, your data is transferred securely via Apple's <strong>CloudKit</strong> infrastructure. This data is end-to-end encrypted and accessible only through your Apple ID — we have no visibility into it whatsoever.</p>
+        </div>
+
+        <div class="prose-section">
+            <h2>3. AI Processing</h2>
+            <p>Task prioritization and all AI suggestions are computed <strong>entirely on-device</strong>. <span class="inline-tag">✓ On-device only</span> Your task content is never sent to external servers for processing or model training. Your thoughts stay yours.</p>
+        </div>
+
+        <div class="prose-section">
+            <h2>4. Data Deletion</h2>
+            <p>Because your data is stored locally and within your private iCloud account, you have complete control. Deleting the app or clearing your data through the app's settings permanently and irreversibly removes all your information — no deletion requests needed.</p>
+        </div>
+
+        <div class="contact-card">
+            <div>
+                <h3>Have questions?</h3>
+                <p>We're happy to answer anything about this policy or provide app support.</p>
+            </div>
+            <a href="mailto:support@yourdomain.com" class="btn-email">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+                Email Support
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-brand">Taven</div>
+    <p>© 2026 Taven. All rights reserved.</p>
+</footer>
+
+<script>
+    // Streak chart
+    const heights = [40, 70, 30, 90, 60, 100, 80, 45, 75, 55, 95, 35, 85, 65];
+    const active =  [1,  1,  0,  1,  1,  1,  0,  1,  1,  0,  1,  1,  1,  1];
+    const chart = document.getElementById('streakChart');
+    if (chart) {
+        heights.forEach((h, i) => {
+            const bar = document.createElement('div');
+            bar.className = 'bar' + (active[i] ? ' active' : '');
+            bar.style.height = h + '%';
+            chart.appendChild(bar);
+        });
+    }
+
+    // Page switching
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.getElementById('link-' + pageId).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Subtle counter animation for stats
+    function animateValue(el, end, duration = 1200) {
+        if (!el) return;
+        const text = el.textContent.trim();
+        if (text === '0' || text.match(/^\d+$/)) {
+            let start = 0;
+            const step = (timestamp) => {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * end);
+                if (progress < 1) requestAnimationFrame(step);
+                else el.textContent = end;
+            };
+            requestAnimationFrame(step);
+        }
+    }
+
+    // Trigger counter on scroll into view
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const el = e.target.querySelector('.stat-num');
+                if (el && el.textContent === '0') animateValue(el, 0);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
