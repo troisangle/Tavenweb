@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy — Taven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:       #0d0f0e;
+      --ink-2:     #2a2d2b;
+      --ink-3:     #5a5f5c;
+      --ink-4:     #9aa09c;
+      --paper:     #f7f6f3;
+      --paper-2:   #eeecea;
+      --paper-3:   #e3e1de;
+      --line:      rgba(13,15,14,0.09);
+      --line-dark: rgba(13,15,14,0.18);
+      --accent:    #1a4f3a;
+      --accent-lt: rgba(26,79,58,0.08);
+      --accent-bd: rgba(26,79,58,0.2);
+      --r-sm: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.022'/%3E%3C/svg%3E");
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:200;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(247,246,243,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+    }
+    .nav-center { display: flex; gap: 2px; }
+    .nav-center a {
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--ink-3); text-decoration: none;
+      padding: 7px 16px; border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+    .nav-center a:hover  { color: var(--ink); background: var(--paper-2); }
+    .nav-center a.active { color: var(--ink); background: var(--paper-2); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 20px;
+      background: var(--ink); color: var(--paper);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; border-radius: var(--r-sm);
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* PRIVACY PAGE SPECIFICS */
+    .privacy-wrap { 
+      max-width:840px; margin:0 auto; padding:128px 48px 100px; 
+      animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    .privacy-hero-h1 {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(3.5rem,8vw,6.5rem); font-weight:300;
+      line-height:1.0; letter-spacing:-0.03em; margin-bottom:20px;
+    }
+    .privacy-hero-h1 em { font-style:italic; color:var(--accent); }
+    .privacy-date { font-size:.8rem; color:var(--ink-4); letter-spacing:.06em; text-transform:uppercase; margin-bottom:64px; }
+    
+    .prose-block { border-top:1px solid var(--line); padding:36px 0; }
+    .prose-block-inner { display:grid; grid-template-columns:180px 1fr; gap:40px; }
+    .prose-index { font-family:'Cormorant Garamond',serif; font-size:.9rem; font-weight:400; color:var(--ink-4); letter-spacing:.06em; }
+    .prose-content h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:12px; }
+    .prose-content p { font-size:.95rem; font-weight:300; line-height:1.8; color:var(--ink-3); margin-bottom: 12px; }
+    
+    .tag {
+      display:inline-flex; align-items:center; gap:5px;
+      background:var(--accent-lt); border:1px solid var(--accent-bd); color:var(--accent);
+      font-size:.72rem; font-weight:600; font-family:'JetBrains Mono',monospace;
+      padding:2px 8px; border-radius:4px;
+    }
+
+    /* FOOTER */
+    footer { border-top:1px solid var(--line); padding:28px 48px; display:flex; align-items:center; justify-content:space-between; }
+    .foot-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em; }
+    .foot-links { display:flex; gap:24px; }
+    .foot-links a { font-size:.78rem; color:var(--ink-4); text-decoration:none; transition: color .2s; }
+    .foot-links a:hover { color:var(--ink); }
+
+    @media(max-width:900px){
+      .prose-block-inner{grid-template-columns:1fr; gap:12px;}
+      footer {flex-direction:column; gap:16px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Taven</a>
+  <div class="nav-center">
+    <a href="index.html">Product</a>
+    <a href="privacy.html" class="active">Privacy</a>
+  </div>
+  <a href="https://apps.apple.com" class="nav-cta">Download</a>
+</nav>
+
+<div class="privacy-wrap">
+  <h1 class="privacy-hero-h1">Privacy,<br>built into<br>the <em>code.</em></h1>
+  <p class="privacy-date">Last updated: April 5, 2026</p>
+
+  <div class="prose-block">
+    <div class="prose-block-inner">
+      <div class="prose-index">01 — Philosophy</div>
+      <div class="prose-content">
+        <h3>Privacy First</h3>
+        <p>Taven was built on the belief that your productivity data is sacred. We have designed the app so that we never have access to your tasks, notes, names, or email addresses. Your data stays where it belongs: with you.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose-block">
+    <div class="prose-block-inner">
+      <div class="prose-index">02 — Collection</div>
+      <div class="prose-content">
+        <h3>Data We Do Not Collect</h3>
+        <p>We do not collect or store any of your task data on our own servers. Because Taven does not require an account to function, we do not possess your name, email, or any identifying information. <span class="tag">✓ Zero Data Tracking</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose-block">
+    <div class="prose-block-inner">
+      <div class="prose-index">03 — Infrastructure</div>
+      <div class="prose-content">
+        <h3>How We Process Data</h3>
+        <p>Taven utilizes <strong>SwiftData</strong> for local storage on your hardware. If you choose to enable syncing, your data is hosted by Apple via <strong>CloudKit</strong>. As the developer, I have no way to view or access your CloudKit database — Apple acts as the secure host for your private encrypted sync.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose-block">
+    <div class="prose-block-inner">
+      <div class="prose-index">04 — Intelligence</div>
+      <div class="prose-content">
+        <h3>On-Device AI</h3>
+        <p>The intelligence features in Taven are powered by models that run <strong>entirely on your device</strong>. Your tasks are never uploaded to a third-party LLM or external cloud service for processing. <span class="tag">✓ 100% On-Device AI</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose-block">
+    <div class="prose-block-inner">
+      <div class="prose-index">05 — Rights</div>
+      <div class="prose-content">
+        <h3>Your Rights (GDPR/CCPA)</h3>
+        <p>By storing data locally and in your personal iCloud, Taven gives you ultimate control. You can exercise your right to delete or modify data simply by managing your tasks in-app or deleting the app from your device. No formal request is needed because we don't have your data to begin with.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 64px;">
+    <h3>Questions?</h3>
+    <p style="color: var(--ink-3); font-weight: 300; margin-top: 8px;">Reach out at <a href="mailto:support@tavenproductivity.com" style="color: var(--accent); font-weight: 500;">support@tavenproductivity.com</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">Taven</div>
+  <div class="foot-links">
+    <a href="index.html">Product</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:support@tavenproductivity.com">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
