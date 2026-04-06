@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Taven — Intelligent Task Management</title>
+  <title>Taven — Privacy-First Task Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
@@ -35,6 +35,7 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
+    /* Subtle Grain Effect */
     body::after {
       content: '';
       position: fixed; inset: 0; z-index: 9999;
@@ -45,7 +46,7 @@
     .page.active { display: block; animation: pageIn 0.45s cubic-bezier(0.22,1,0.36,1) both; }
     @keyframes pageIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
-    /* NAV */
+    /* NAVIGATION */
     nav {
       position: fixed; top:0; left:0; right:0; z-index:200;
       height: 64px;
@@ -82,9 +83,8 @@
       transition: background .2s, transform .15s;
     }
     .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
-    .nav-cta svg { width: 14px; height: 14px; }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
       padding: 148px 48px 80px;
       max-width: 1160px; margin: 0 auto;
@@ -119,17 +119,14 @@
       transition: background .2s, transform .15s, box-shadow .2s;
     }
     .btn-dl:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(26,79,58,.25); }
-    .btn-dl svg { width: 17px; height: 17px; }
     .btn-ghost {
       font-size: 0.875rem; font-weight: 500; color: var(--ink-3);
       text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
       transition: color .2s; cursor: pointer; background: none; border: none;
     }
     .btn-ghost:hover { color: var(--ink); }
-    .btn-ghost svg { width: 14px; height: 14px; transition: transform .2s; }
-    .btn-ghost:hover svg { transform: translateX(3px); }
 
-    /* HERO CARD */
+    /* HERO CARD PREVIEW */
     .hero-card {
       background: #fff;
       border: 1px solid var(--line-dark);
@@ -137,9 +134,7 @@
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 24px 64px rgba(0,0,0,.09);
       position: sticky; top: 88px;
-      animation: cardIn .7s cubic-bezier(.22,1,.36,1) .15s both;
     }
-    @keyframes cardIn { from{opacity:0;transform:translateY(20px) scale(.98);} to{opacity:1;transform:translateY(0) scale(1);} }
     .card-header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--line);
@@ -155,216 +150,44 @@
     .task-row {
       display: flex; align-items: center; gap: 14px;
       padding: 15px 24px; border-bottom: 1px solid var(--line);
-      transition: background .15s;
-      animation: rowIn .4s ease both;
     }
-    .task-row:last-child { border-bottom: none; }
-    .task-row:hover { background: var(--paper); }
-    .task-row:nth-child(1){animation-delay:.3s} .task-row:nth-child(2){animation-delay:.42s}
-    .task-row:nth-child(3){animation-delay:.54s} .task-row:nth-child(4){animation-delay:.66s}
-    @keyframes rowIn { from{opacity:0;transform:translateX(-6px);} to{opacity:1;transform:translateX(0);} }
-    .task-cb {
-      width:18px; height:18px; border-radius:5px; flex-shrink:0;
-      display:flex; align-items:center; justify-content:center; font-size:.6rem;
-    }
-    .task-cb.done { background:var(--accent-lt); border:1px solid var(--accent-bd); color:var(--accent); }
+    .task-cb { width:18px; height:18px; border-radius:5px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .task-cb.done { background:var(--accent-lt); border:1px solid var(--accent-bd); color:var(--accent); font-size: .6rem; }
     .task-cb.open { background:transparent; border:1.5px solid var(--paper-3); }
-    .task-body { flex:1; min-width:0; }
     .task-name { font-size:.875rem; font-weight:500; color:var(--ink); }
     .task-name.crossed { color:var(--ink-4); text-decoration:line-through; }
-    .task-sub { font-size:.72rem; color:var(--ink-4); margin-top:2px; }
-    .pri {
-      font-family:'JetBrains Mono',monospace;
-      font-size:.62rem; font-weight:500; padding:3px 7px; border-radius:4px;
-      flex-shrink:0; letter-spacing:.04em;
-    }
+    .pri { font-family:'JetBrains Mono',monospace; font-size:.62rem; font-weight:500; padding:3px 7px; border-radius:4px; }
     .pri-hi { background:#fef2f2; color:#dc4a4a; border:1px solid #fecaca; }
-    .pri-md { background:#fffbeb; color:#b45309; border:1px solid #fde68a; }
-    .pri-lo { background:var(--accent-lt); color:var(--accent); border:1px solid var(--accent-bd); }
-    .pri-dn { background:var(--paper-2); color:var(--ink-4); border:1px solid var(--line-dark); }
 
-    /* DIVIDER */
-    .full-divider { border:none; border-top:1px solid var(--line); margin:0 48px; }
-
-    /* METRICS */
-    .metrics {
-      display:grid; grid-template-columns:repeat(3,1fr);
-      max-width:1160px; margin:0 auto; padding:0 48px;
-    }
-    .metric {
-      padding:52px 0 52px 40px;
-      border-right:1px solid var(--line);
-    }
-    .metric:first-child { padding-left:0; }
-    .metric:last-child  { border-right:none; }
-    .metric-num {
-      font-family:'Cormorant Garamond',serif;
-      font-size:4rem; font-weight:300; line-height:1;
-      color:var(--ink); letter-spacing:-0.03em; margin-bottom:6px;
-    }
-    .metric-num sup { font-size:1.8rem; vertical-align:super; }
-    .metric-label { font-size:.82rem; color:var(--ink-3); font-weight:400; }
-
-    /* FEATURES */
-    .features-section { padding:100px 48px; max-width:1160px; margin:0 auto; }
-    .section-eyebrow {
-      display:flex; align-items:center; gap:16px;
-      font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-      color:var(--ink-4); margin-bottom:20px;
-    }
-    .section-eyebrow::after { content:''; flex:1; height:1px; background:var(--line-dark); }
-    .section-h2 {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.4rem,4.5vw,4rem);
-      font-weight:300; letter-spacing:-0.025em; line-height:1.1;
-      margin-bottom:72px; max-width:600px;
-    }
-    .section-h2 em { font-style:italic; color:var(--accent); }
-    .features-grid {
-      display:grid; grid-template-columns:repeat(3,1fr);
-      gap:1px; background:var(--line-dark);
-      border:1px solid var(--line-dark); border-radius:var(--r-lg); overflow:hidden;
-    }
-    .feat {
-      background:var(--paper); padding:40px 36px;
-      transition:background .2s; position:relative;
-    }
-    .feat:hover { background:#fff; }
-    .feat.span2 { grid-column:span 2; }
-    .feat-num {
-      font-family:'Cormorant Garamond',serif;
-      font-size:.9rem; font-weight:400; color:var(--ink-4);
-      letter-spacing:.06em; margin-bottom:28px;
-    }
-    .feat-icon {
-      width:40px; height:40px; border-radius:var(--r-sm);
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.1rem; margin-bottom:18px;
-      background:var(--paper-2); border:1px solid var(--line-dark);
-    }
-    .feat h3 {
-      font-family:'Cormorant Garamond',serif;
-      font-size:1.5rem; font-weight:400; letter-spacing:-0.02em;
-      color:var(--ink); margin-bottom:12px;
-    }
-    .feat p { font-size:.875rem; font-weight:300; line-height:1.75; color:var(--ink-3); }
-    .mini-chart { display:flex; align-items:flex-end; gap:4px; height:56px; margin-top:32px; }
-    .mc-bar { flex:1; border-radius:3px 3px 0 0; background:var(--paper-3); transition:background .2s; }
-    .mc-bar.on { background:var(--accent); }
-    .mc-bar.on:hover { background:var(--accent-2); }
-    .chart-label { font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--ink-4); margin-top:10px; }
-
-    /* CTA BAND */
-    .cta-band {
-      margin:0 48px 100px;
-      background:var(--ink); border-radius:var(--r-lg);
-      padding:72px 64px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:40px; overflow:hidden; position:relative;
-    }
-    .cta-band::before {
-      content:''; position:absolute; top:-80px; right:-80px;
-      width:320px; height:320px; border-radius:50%;
-      background:radial-gradient(circle,rgba(26,79,58,.4) 0%,transparent 70%);
-      pointer-events:none;
-    }
-    .cta-band-text h2 {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2rem,4vw,3.2rem); font-weight:300;
-      color:var(--paper); letter-spacing:-0.025em; line-height:1.1; margin-bottom:10px;
-    }
-    .cta-band-text h2 em { font-style:italic; color:#a3d9b8; }
-    .cta-band-text p { font-size:.9rem; color:rgba(247,246,243,.5); font-weight:300; }
-    .btn-dl-inv {
-      display:inline-flex; align-items:center; gap:10px;
-      padding:15px 30px; background:var(--paper); color:var(--ink);
-      font-size:.875rem; font-weight:600; letter-spacing:.03em;
-      text-decoration:none; border-radius:var(--r-sm);
-      white-space:nowrap; flex-shrink:0;
-      transition:background .2s, transform .15s;
-    }
-    .btn-dl-inv:hover { background:#e8efe9; transform:translateY(-1px); }
-    .btn-dl-inv svg { width:16px; height:16px; }
-
-    /* PRIVACY */
+    /* PRIVACY PAGE SPECIFICS */
     .privacy-wrap { max-width:840px; margin:0 auto; padding:128px 48px 100px; }
     .privacy-hero-h1 {
       font-family:'Cormorant Garamond',serif;
       font-size:clamp(3.5rem,8vw,6.5rem); font-weight:300;
       line-height:1.0; letter-spacing:-0.03em; margin-bottom:20px;
     }
-    .privacy-hero-h1 em { font-style:italic; color:var(--accent); }
     .privacy-date { font-size:.8rem; color:var(--ink-4); letter-spacing:.06em; text-transform:uppercase; margin-bottom:64px; }
-    .privacy-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:72px; }
-    .p-card {
-      background:#fff; border:1px solid var(--line-dark);
-      border-radius:var(--r-md); padding:28px 24px; text-align:center;
-    }
-    .p-card-icon { font-size:1.4rem; margin-bottom:12px; }
-    .p-card-label { font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4); margin-bottom:6px; }
-    .p-card-val { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; color:var(--accent); }
     .prose-block { border-top:1px solid var(--line); padding:36px 0; }
-    .prose-block:last-of-type { border-bottom:1px solid var(--line); }
     .prose-block-inner { display:grid; grid-template-columns:180px 1fr; gap:40px; }
-    .prose-index { font-family:'Cormorant Garamond',serif; font-size:.9rem; font-weight:400; color:var(--ink-4); letter-spacing:.06em; padding-top:2px; }
-    .prose-content h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; letter-spacing:-0.02em; color:var(--ink); margin-bottom:12px; }
-    .prose-content p { font-size:.9rem; font-weight:300; line-height:1.8; color:var(--ink-3); }
-    .prose-content p strong { color:var(--ink); font-weight:500; }
+    .prose-index { font-family:'Cormorant Garamond',serif; font-size:.9rem; font-weight:400; color:var(--ink-4); letter-spacing:.06em; }
+    .prose-content h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:12px; }
+    .prose-content p { font-size:.95rem; font-weight:300; line-height:1.8; color:var(--ink-3); margin-bottom: 12px; }
     .tag {
       display:inline-flex; align-items:center; gap:5px;
       background:var(--accent-lt); border:1px solid var(--accent-bd); color:var(--accent);
       font-size:.72rem; font-weight:600; font-family:'JetBrains Mono',monospace;
-      letter-spacing:.04em; padding:2px 8px; border-radius:4px;
+      padding:2px 8px; border-radius:4px;
     }
-    .contact-row {
-      display:flex; align-items:center; justify-content:space-between;
-      gap:24px; padding:48px 0 0;
-    }
-    .contact-row h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; letter-spacing:-0.02em; margin-bottom:6px; }
-    .contact-row p { font-size:.875rem; color:var(--ink-3); font-weight:300; }
-    .btn-email {
-      display:inline-flex; align-items:center; gap:8px;
-      padding:13px 24px; border:1.5px solid var(--ink); color:var(--ink);
-      background:transparent; font-size:.8rem; font-weight:600;
-      letter-spacing:.05em; text-transform:uppercase;
-      text-decoration:none; border-radius:var(--r-sm); white-space:nowrap;
-      transition:background .2s, color .2s, transform .15s;
-    }
-    .btn-email:hover { background:var(--ink); color:var(--paper); transform:translateY(-1px); }
-    .btn-email svg { width:14px; height:14px; }
 
     /* FOOTER */
-    footer {
-      border-top:1px solid var(--line); padding:28px 48px;
-      display:flex; align-items:center; justify-content:space-between;
-      position:relative; z-index:1;
-    }
-    .foot-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); }
-    .foot-copy { font-size:.78rem; color:var(--ink-4); }
+    footer { border-top:1px solid var(--line); padding:28px 48px; display:flex; align-items:center; justify-content:space-between; }
+    .foot-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:500; color:var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em; }
     .foot-links { display:flex; gap:24px; }
-    .foot-links a { font-size:.78rem; color:var(--ink-4); text-decoration:none; cursor:pointer; transition:color .15s; }
-    .foot-links a:hover { color:var(--ink); }
+    .foot-links a { font-size:.78rem; color:var(--ink-4); text-decoration:none; cursor:pointer; }
 
-    /* RESPONSIVE */
     @media(max-width:900px){
-      nav{padding:0 24px;}
-      .hero{grid-template-columns:1fr;padding:120px 24px 60px;}
-      .hero-card{position:static;}
-      .metrics,.features-section{padding-left:24px;padding-right:24px;}
-      .features-grid{grid-template-columns:1fr;}
-      .feat.span2{grid-column:span 1;}
-      .cta-band{margin:0 24px 72px;padding:48px 36px;flex-direction:column;text-align:center;}
-      footer{padding:24px;flex-direction:column;gap:16px;text-align:center;}
-      .full-divider{margin:0 24px;}
-    }
-    @media(max-width:640px){
-      .nav-center{display:none;}
-      .metrics{grid-template-columns:1fr;}
-      .metric{border-right:none;border-bottom:1px solid var(--line);padding:32px 0;}
-      .privacy-wrap{padding:100px 24px 72px;}
-      .privacy-cards{grid-template-columns:1fr;}
-      .prose-block-inner{grid-template-columns:1fr;gap:8px;}
-      .contact-row{flex-direction:column;align-items:flex-start;}
+      .hero{grid-template-columns:1fr; padding:120px 24px 60px;}
+      .prose-block-inner{grid-template-columns:1fr; gap:12px;}
     }
   </style>
 </head>
@@ -373,187 +196,110 @@
 <nav>
   <div class="nav-logo" onclick="showPage('about')">Taven</div>
   <div class="nav-center">
-    <a id="link-about" class="active" onclick="showPage('about')">About</a>
+    <a id="link-about" class="active" onclick="showPage('about')">Product</a>
     <a id="link-privacy" onclick="showPage('privacy')">Privacy</a>
   </div>
-  <a href="https://apps.apple.com" class="nav-cta">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-    Download free
-  </a>
+  <a href="https://apps.apple.com" class="nav-cta">Download</a>
 </nav>
 
-<!-- ABOUT -->
 <div id="about" class="page active">
   <section class="hero">
     <div class="hero-left">
-      <div class="hero-kicker">Now on the App Store</div>
-      <h1 class="hero-h1">Your tasks,<br><em>intelligently</em><br>prioritized.</h1>
-      <p class="hero-desc">Taven goes beyond simple to-do lists. A smart on-device algorithm surfaces what matters most, so you always know exactly what to work on next — without the noise.</p>
+      <div class="hero-kicker">Intelligent Task Management</div>
+      <h1 class="hero-h1">Focus on<br>what <em>matters</em><br>right now.</h1>
+      <p class="hero-desc">Taven is a "Privacy First" task manager that uses on-device intelligence to surface your most important work, keeping the noise at bay.</p>
       <div class="hero-actions">
-        <a href="https://apps.apple.com" class="btn-dl">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          Get on iOS — Free
-        </a>
-        <button class="btn-ghost" onclick="showPage('privacy')">
-          Privacy policy
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        <a href="https://apps.apple.com" class="btn-dl">Get on iOS — Free</a>
+        <button class="btn-ghost" onclick="showPage('privacy')">Read our philosophy &rarr;</button>
       </div>
     </div>
 
     <div class="hero-card">
       <div class="card-header">
-        <span class="card-title">Today's Focus</span>
-        <span class="card-score">AI Score: 94</span>
+        <span class="card-title">Taven Intelligence</span>
+        <span class="card-score">Score: 94</span>
       </div>
       <div class="task-row">
         <div class="task-cb open"></div>
-        <div class="task-body"><div class="task-name">Finish Q3 design review</div><div class="task-sub">Due today &middot; 45 min</div></div>
+        <div class="task-body"><div class="task-name">Finalize project proposal</div></div>
         <span class="pri pri-hi">HIGH</span>
       </div>
       <div class="task-row">
-        <div class="task-cb open"></div>
-        <div class="task-body"><div class="task-name">Reply to team standup notes</div><div class="task-sub">Due today &middot; 10 min</div></div>
-        <span class="pri pri-md">MED</span>
-      </div>
-      <div class="task-row">
         <div class="task-cb done">✓</div>
-        <div class="task-body"><div class="task-name crossed">Morning workout</div><div class="task-sub">Completed &middot; Daily habit</div></div>
-        <span class="pri pri-dn">DONE</span>
-      </div>
-      <div class="task-row">
-        <div class="task-cb open"></div>
-        <div class="task-body"><div class="task-name">Research new project tools</div><div class="task-sub">No deadline &middot; 30 min</div></div>
-        <span class="pri pri-lo">LOW</span>
+        <div class="task-body"><div class="task-name crossed">Morning deep work</div></div>
       </div>
     </div>
   </section>
-
-  <hr class="full-divider" />
-  <div class="metrics">
-    <div class="metric"><div class="metric-num">100<sup>%</sup></div><div class="metric-label">On-device AI processing</div></div>
-    <div class="metric"><div class="metric-num">0</div><div class="metric-label">Data points collected from you</div></div>
-    <div class="metric"><div class="metric-num">∞</div><div class="metric-label">Recurring task patterns supported</div></div>
-  </div>
-  <hr class="full-divider" />
-
-  <section class="features-section">
-    <div class="section-eyebrow">Core Features</div>
-    <h2 class="section-h2">Built for the way<br>you <em>actually</em> work.</h2>
-    <div class="features-grid">
-      <div class="feat">
-        <div class="feat-num">01</div>
-        <div class="feat-icon">⚡</div>
-        <h3>Intelligent Prioritization</h3>
-        <p>Stop guessing what to do next. A custom algorithm analyzes your tasks in real-time and surfaces exactly what you should tackle first — based on urgency, effort, and your habits.</p>
-      </div>
-      <div class="feat">
-        <div class="feat-num">02</div>
-        <div class="feat-icon">🔁</div>
-        <h3>Smart Recurrence</h3>
-        <p>From daily habits to yearly milestones, Taven handles complex recurring schedules effortlessly. Set it once, and it's always on your calendar.</p>
-      </div>
-      <div class="feat">
-        <div class="feat-num">03</div>
-        <div class="feat-icon">🔒</div>
-        <h3>Privacy First</h3>
-        <p>Your data lives on your device. No accounts required. No cloud data collection. Everything processed locally — your tasks stay yours, always.</p>
-      </div>
-      <div class="feat span2">
-        <div class="feat-num">04</div>
-        <div class="feat-icon">📊</div>
-        <h3>Insightful Analytics</h3>
-        <p>Visualize your productivity over days, weeks, or months. Built-in streak tracking and completion charts reveal your patterns, so you can build on what works and fix what doesn't.</p>
-        <div class="mini-chart" id="miniChart"></div>
-        <div class="chart-label">Last 14 days &mdash; 11 of 14 completed</div>
-      </div>
-      <div class="feat">
-        <div class="feat-num">05</div>
-        <div class="feat-icon">☁️</div>
-        <h3>iCloud Sync</h3>
-        <p>Optionally sync across all your Apple devices via your private iCloud account. End-to-end encrypted, accessible only to you.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="cta-band">
-    <div class="cta-band-text">
-      <h2>Ready to take back<br>your <em>focus?</em></h2>
-      <p>Free to download. No subscription. No account required.</p>
-    </div>
-    <a href="https://apps.apple.com" class="btn-dl-inv">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      Download on the App Store
-    </a>
-  </div>
 </div>
 
-<!-- PRIVACY -->
 <div id="privacy" class="page">
   <div class="privacy-wrap">
-    <h1 class="privacy-hero-h1">Privacy,<br>not as a policy.<br>As a <em>principle.</em></h1>
-    <p class="privacy-date">Last updated: March 2026</p>
-    <div class="privacy-cards">
-      <div class="p-card"><div class="p-card-icon">🚫</div><div class="p-card-label">Data Used to Track You</div><div class="p-card-val">None</div></div>
-      <div class="p-card"><div class="p-card-icon">🔗</div><div class="p-card-label">Data Linked to You</div><div class="p-card-val">None</div></div>
-      <div class="p-card"><div class="p-card-icon">📣</div><div class="p-card-label">Third-Party Advertising</div><div class="p-card-val">None</div></div>
-    </div>
+    <h1 class="privacy-hero-h1">Privacy,<br>built into<br>the <em>code.</em></h1>
+    <p class="privacy-date">Last updated: April 5, 2026</p>
+
     <div class="prose-block">
       <div class="prose-block-inner">
-        <div class="prose-index">01 &mdash; Collection</div>
+        <div class="prose-index">01 — Philosophy</div>
         <div class="prose-content">
-          <h3>Data Collection &amp; Use</h3>
-          <p><strong>Taven</strong> is built on a Privacy First philosophy. We do not collect, store, or sell your personal information. All task data, notes, and schedules are stored locally on your device using <strong>SwiftData</strong>. <span class="tag">✓ No accounts required</span></p>
+          <h3>Privacy First</h3>
+          <p>Taven was built on the belief that your productivity data is sacred. We have designed the app so that we never have access to your tasks, notes, names, or email addresses. Your data stays where it belongs: with you.</p>
         </div>
       </div>
     </div>
+
     <div class="prose-block">
       <div class="prose-block-inner">
-        <div class="prose-index">02 &mdash; Syncing</div>
+        <div class="prose-index">02 — Collection</div>
         <div class="prose-content">
-          <h3>Cloud Syncing</h3>
-          <p>If you choose to enable iCloud syncing, your data is transferred securely via Apple's <strong>CloudKit</strong> infrastructure. This data is end-to-end encrypted and accessible only through your Apple ID — we have no visibility into it whatsoever.</p>
+          <h3>Data We Do Not Collect</h3>
+          <p>We do not collect or store any of your task data on our own servers. Because Taven does not require an account to function, we do not possess your name, email, or any identifying information. <span class="tag">✓ Zero Data Tracking</span></p>
         </div>
       </div>
     </div>
+
     <div class="prose-block">
       <div class="prose-block-inner">
-        <div class="prose-index">03 &mdash; AI</div>
+        <div class="prose-index">03 — Infrastructure</div>
         <div class="prose-content">
-          <h3>AI Processing</h3>
-          <p>Task prioritization and all AI suggestions are computed <strong>entirely on-device</strong>. <span class="tag">✓ On-device only</span> Your task content is never sent to external servers for processing or model training. Your thoughts stay yours.</p>
+          <h3>How We Process Data</h3>
+          <p>Taven utilizes <strong>SwiftData</strong> for local storage on your hardware. If you choose to enable syncing, your data is hosted by Apple via <strong>CloudKit</strong>. As the developer, I have no way to view or access your CloudKit database — Apple acts as the secure host for your private encrypted sync.</p>
         </div>
       </div>
     </div>
+
     <div class="prose-block">
       <div class="prose-block-inner">
-        <div class="prose-index">04 &mdash; Deletion</div>
+        <div class="prose-index">04 — Intelligence</div>
         <div class="prose-content">
-          <h3>Data Deletion</h3>
-          <p>Because your data is stored locally and within your private iCloud account, you have complete control. Deleting the app permanently and irreversibly removes all your information — no deletion requests needed.</p>
+          <h3>On-Device AI</h3>
+          <p>The intelligence features in Taven are powered by models that run <strong>entirely on your device</strong>. Your tasks are never uploaded to a third-party LLM or external cloud service for processing. <span class="tag">✓ 100% On-Device AI</span></p>
         </div>
       </div>
     </div>
-    <div class="contact-row">
-      <div>
-        <h3>Have questions?</h3>
-        <p>We're happy to answer anything about this policy or provide app support.</p>
+
+    <div class="prose-block">
+      <div class="prose-block-inner">
+        <div class="prose-index">05 — Rights</div>
+        <div class="prose-content">
+          <h3>Your Rights (GDPR/CCPA)</h3>
+          <p>By storing data locally and in your personal iCloud, Taven gives you ultimate control. You can exercise your right to delete or modify data simply by managing your tasks in-app or deleting the app from your device. No formal request is needed because we don't have your data to begin with.</p>
+        </div>
       </div>
-      <a href="mailto:support@yourdomain.com" class="btn-email">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
-        Email Support
-      </a>
+    </div>
+
+    <div style="margin-top: 64px;">
+      <h3>Questions?</h3>
+      <p style="color: var(--ink-3); font-weight: 300; margin-top: 8px;">Reach out at <a href="mailto:support@taven.ai" style="color: var(--accent); font-weight: 500;">support@taven.ai</a></p>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="foot-logo">Taven</div>
-  <p class="foot-copy">© 2026 Taven. All rights reserved.</p>
   <div class="foot-links">
-    <a onclick="showPage('about')">About</a>
+    <a onclick="showPage('about')">Product</a>
     <a onclick="showPage('privacy')">Privacy</a>
-    <a href="mailto:support@yourdomain.com">Contact</a>
+    <a href="mailto:support@taven.ai">Contact</a>
   </div>
 </footer>
 
@@ -564,17 +310,6 @@
     document.getElementById(id).classList.add('active');
     document.getElementById('link-' + id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  const heights = [40,70,30,90,60,100,80,45,75,55,95,35,85,65];
-  const active  = [1,1,0,1,1,1,0,1,1,0,1,1,1,1];
-  const chart   = document.getElementById('miniChart');
-  if (chart) {
-    heights.forEach((h, i) => {
-      const b = document.createElement('div');
-      b.className = 'mc-bar' + (active[i] ? ' on' : '');
-      b.style.height = h + '%';
-      chart.appendChild(b);
-    });
   }
 </script>
 </body>
