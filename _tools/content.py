@@ -389,3 +389,27 @@ PAGES.append(dict(
     ],
     related=["compare/taven-vs-todoist.html", "guides/best-task-manager-apps-iphone.html", "guides/what-task-to-do-next.html"],
 ))
+
+
+# ─────────────────────────────────────────────────────────────
+# FAQ page (/faq.html): list of (group heading, [(question, answer_html), ...])
+FAQ = [
+    ("About Taven", [
+        ("What is Taven?", "Taven is a free task manager and AI to-do list app for iPhone and iPad. It doesn't just organize your tasks — it tells you what to do next, using on-device intelligence to surface your most important task."),
+        ("How does Taven decide what I should do next?", "Taven weighs each task's importance, due date and recurrence, then puts one AI Suggested task at the top of your day with a short reason, such as “Due today and your top priority.” You don't need to set up filters or priority systems."),
+        ("Does Taven track habits?", "Yes. Every recurring task — daily, weekly, monthly or yearly — becomes a habit with its own streak and history, and you can skip a day without losing track."),
+        ("How is Taven different from Todoist or TickTick?", 'Todoist and TickTick are powerful, cross-platform organizers with collaboration and lots of views. Taven is simpler, private and free, and decides what you should do next for you. See <a href="/compare/taven-vs-todoist.html">Taven vs. Todoist</a> and <a href="/compare/taven-vs-ticktick.html">Taven vs. TickTick</a>.'),
+    ]),
+    ("Pricing & devices", [
+        ("Is Taven free?", "Yes. Taven is free to download with no subscription."),
+        ("Which devices does Taven work on?", "Taven is available for iPhone and iPad. It isn't available on Android, Windows or the web."),
+        ("Can I use Taven on more than one device?", "Yes. Taven can optionally sync between your iPhone and iPad through your own private iCloud account."),
+    ]),
+    ("Privacy & accounts", [
+        ("Do I need to create an account?", "No. Taven works without any account."),
+        ("Is my data private?", 'Yes. Your tasks stay on your device, Taven\'s AI runs on-device, and Taven collects zero data and includes no third-party SDKs. <a href="/privacy.html">Read the privacy policy</a>.'),
+    ]),
+    ("Choosing an app", [
+        ("Where can I compare Taven with other apps?", 'Read our <a href="/guides/best-task-manager-apps-iphone.html">iPhone task manager comparison</a>, the <a href="/guides/best-ai-to-do-list-apps.html">best AI to-do list apps</a>, or browse <a href="/guides/">all guides</a>.'),
+    ]),
+]

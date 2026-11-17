@@ -22,7 +22,9 @@ Key facts:
 
 ## Pages
 
-- [Home](https://tavenproductivity.com/): product overview and FAQ
+- [Home](https://tavenproductivity.com/): product overview
+- [Features](https://tavenproductivity.com/features.html): everything Taven does, in detail
+- [FAQ](https://tavenproductivity.com/faq.html): pricing, devices, privacy, accounts and how Taven picks your next task
 - [Privacy policy](https://tavenproductivity.com/privacy.html): exactly how Taven handles data
 - [Guides](https://tavenproductivity.com/guides/): all guides and comparisons
 
