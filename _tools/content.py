@@ -243,153 +243,190 @@ PAGES.append(dict(
     related=["guides/to-do-list-overwhelm.html", "guides/best-ai-to-do-list-apps.html", "guides/best-task-manager-apps-iphone.html"],
 ))
 
+COMPARE_DISCLOSURE = '<div class="note"><strong>Disclosure:</strong> Taven is our app, so we\'re biased — but we\'ve kept every fact on this page accurate and noted where {other} is the better fit. Features and pricing change often; check the App Store for current details.</div>'
+
+def benefit(title, text):
+    return f'''    <h3>{title}</h3>
+    <p>{text}</p>'''
+
+def day(app, steps):
+    lis = "".join(f"<li>{s}</li>" for s in steps)
+    return f'''      <div class="card frost"><h3>{app}</h3><ol>{lis}</ol></div>'''
+
 # 5. Taven vs Todoist
 PAGES.append(dict(
     kind="compare", path="compare/taven-vs-todoist.html",
     label="Comparison", short="Taven vs. Todoist",
-    blurb="A focused, private, free app that picks your next task vs. the cross-platform powerhouse. Who each is for.",
-    title="Taven vs. Todoist (2026): Honest Comparison & Todoist Alternative — Taven",
-    desc="An honest comparison of Taven and Todoist: features, AI, privacy, platforms and pricing. Todoist wins on cross-platform sync, collaboration and integrations; Taven wins on deciding what to do next, privacy and price.",
+    blurb="Why people switch from Todoist to Taven: automatic prioritization, real privacy and no subscription.",
+    title="Taven vs. Todoist (2026): The Free, Private Todoist Alternative for iPhone — Taven",
+    desc="Taven vs. Todoist compared: Taven tells you what to do next with on-device AI, needs no account and is free with no subscription. See where each app wins and why people switch.",
     h1="Taven vs. <span>Todoist</span>",
     h1_plain="Taven vs. Todoist",
-    lede="Todoist is one of the best task managers ever made. Taven is built for a narrower job. Here's an honest look at where each one wins.",
-    answer="Choose <strong>Todoist</strong> if you need your tasks on Android, Windows or the web, share projects with other people, or rely on integrations and advanced filters. Choose <strong>Taven</strong> if you're on iPhone or iPad and want an app that <strong>tells you what to do next</strong>, keeps your data on your device with no account, and is free with no subscription.",
-    body=f'''    {DISCLOSURE.replace("every app here is", "both apps are")}
+    lede="Todoist helps you organize everything. Taven helps you actually get the right thing done — by telling you what to do next. Here's how they compare, and why people on iPhone and iPad are switching.",
+    answer="<strong>Taven</strong> is the better choice if you're on iPhone or iPad and want an app that <strong>decides what you should do next</strong> instead of making you build a priority system. It's <strong>free with no subscription</strong>, needs <strong>no account</strong>, and its AI runs <strong>privately on your device</strong>. Todoist is the better fit only if you need Android, Windows or web access, or share projects with a team.",
+    body=f'''    {COMPARE_DISCLOSURE.format(other="Todoist")}
 
-    <h2>At a glance</h2>
+    <h2>Why choose Taven over Todoist</h2>
+{benefit("1. It tells you what to do next — automatically", "Todoist gives you priority flags (P1–P4), labels and filter queries, and then leaves the decision to you. Taven does the deciding: its on-device AI weighs each task's importance, due date and recurrence, then puts one <strong>AI Suggested</strong> task at the top of your day with a plain-English reason, like “Due today and your top priority.” You open the app and start, instead of scanning a list.")}
+{benefit("2. Free — really free", "Taven costs nothing, with no subscription and no feature paywall. Todoist's free plan is limited, and its full feature set — including its AI features — requires a paid plan billed every year.")}
+{benefit("3. Your tasks stay yours", "Taven has no accounts, no servers holding your tasks and no third-party SDKs, and it collects zero data. Its AI runs entirely on your iPhone or iPad. Todoist requires an account and stores your tasks in its cloud, where its AI features also run.")}
+{benefit("4. Habits built into your tasks", "Every recurring task in Taven — daily, weekly, monthly or yearly — automatically becomes a habit with its own streak and history. Skip a day without losing track. Todoist offers Karma points and daily goals, but not per-task streaks.")}
+{benefit("5. Analytics that show when you do your best work", "Completion rings, weekly charts, monthly heatmaps, your completion rate, your best day and a “Today's Intensity” gauge that warns you when you've planned too much.")}
+{benefit("6. Nothing to set up or maintain", "Todoist rewards people who build and maintain a system. Taven is designed so you don't have to: add tasks, mark what matters, and let it handle the ordering. Less time organizing means more time doing.")}
+
+    <h2>A typical morning in each app</h2>
+    <div class="verdict">
+{day("Todoist", ["Open the Today view", "Scan every task due today and overdue", "Check priority flags and labels", "Weigh deadlines against each other", "Pick something — often the easiest one"])}
+{day("Taven", ["Open the app", "See your AI Suggested task and why it's first", "Start it"])}
+    </div>
+
+    <h2>Side by side</h2>
     <div class="table-wrap"><table class="data-table">
       <thead><tr><th></th><th>Taven</th><th>Todoist</th></tr></thead>
       <tbody>
-        <tr><td>Core idea</td><td>Tells you what to do next</td><td>Captures and organizes everything</td></tr>
-        <tr><td>Platforms</td><td>iPhone, iPad</td><td>iOS, Android, Mac, Windows, web, browser extensions</td></tr>
-        <tr><td>Price</td><td>Free, no subscription</td><td>Free plan; paid Pro and Business plans</td></tr>
-        <tr><td>Account</td><td>None</td><td>Required</td></tr>
-        <tr><td>Where tasks are stored</td><td>On your device (optional private iCloud sync)</td><td>Todoist's servers</td></tr>
-        <tr><td>AI</td><td>On-device: picks your top task and explains why</td><td>Cloud AI assistant for breaking down and phrasing tasks</td></tr>
-        <tr><td>Prioritization</td><td>Automatic</td><td>Manual priority levels (P1–P4) and custom filters</td></tr>
-        <tr><td>Recurring tasks</td><td>Daily, weekly, monthly, yearly, with optional end dates</td><td>Very flexible, set with natural language</td></tr>
-        <tr><td>Habits &amp; streaks</td><td>Built in, per recurring task</td><td>Karma points and daily/weekly goals</td></tr>
-        <tr><td>Analytics</td><td>Completion rings, weekly charts, monthly heatmaps</td><td>Productivity view and Karma trends</td></tr>
-        <tr><td>Collaboration</td><td>No</td><td>Shared projects, comments, assignees</td></tr>
-        <tr><td>Integrations</td><td>Apple ecosystem</td><td>Large integration library (calendar, email, Slack and more)</td></tr>
+        <tr><td>Decides what to do next</td><td><strong>Yes — AI suggestion with a reason</strong></td><td>No — manual priorities and filters</td></tr>
+        <tr><td>Price</td><td><strong>Free, no subscription</strong></td><td>Limited free plan; paid plans for full features</td></tr>
+        <tr><td>Account required</td><td><strong>No</strong></td><td>Yes</td></tr>
+        <tr><td>Where your tasks live</td><td><strong>On your device</strong> (optional private iCloud sync)</td><td>Todoist's servers</td></tr>
+        <tr><td>AI</td><td><strong>On-device and private</strong></td><td>Cloud-based</td></tr>
+        <tr><td>Data collected</td><td><strong>None</strong></td><td>Account and usage data</td></tr>
+        <tr><td>Habit streaks</td><td><strong>Per task, built in</strong></td><td>Karma points and goals</td></tr>
+        <tr><td>Analytics</td><td>Completion rings, weekly charts, monthly heatmaps, daily intensity</td><td>Productivity view and Karma trends</td></tr>
+        <tr><td>Recurring tasks</td><td>Daily, weekly, monthly, yearly, optional end dates</td><td>Very flexible, set with natural language</td></tr>
+        <tr><td>Platforms</td><td>iPhone, iPad</td><td>iOS, Android, Mac, Windows, web</td></tr>
+        <tr><td>Team collaboration</td><td>No</td><td>Shared projects, comments, assignees</td></tr>
+        <tr><td>Integrations</td><td>Apple ecosystem</td><td>Large integration library</td></tr>
       </tbody>
     </table></div>
 
-    <h2>Where Todoist is better</h2>
+    <h2>When Todoist might be the better fit</h2>
+    <p>To be fair, Todoist is a mature, well-made app. Stick with it if:</p>
     <ul>
-      <li><strong>Everywhere you work.</strong> Todoist runs on almost every platform, including Android, Windows and the web. Taven is iPhone and iPad only.</li>
-      <li><strong>Working with other people.</strong> Shared projects, assignees and comments make Todoist a real team tool. Taven is personal.</li>
-      <li><strong>Natural-language quick add.</strong> Typing “Submit expenses every last Friday #Work p1” and having it parsed perfectly is one of Todoist's best features.</li>
-      <li><strong>Power-user organization.</strong> Labels, sections, custom filter queries and board views let you build almost any system.</li>
-      <li><strong>Integrations and maturity.</strong> Todoist has a large integration ecosystem, an API and many years of polish.</li>
+      <li>You need your tasks on <strong>Android, Windows or the web</strong> — Taven is iPhone and iPad only.</li>
+      <li>You <strong>share projects with a team</strong> and need assignees and comments.</li>
+      <li>You depend on <strong>integrations</strong> with tools like Slack, email or your calendar.</li>
     </ul>
+    <p>If you mostly use Todoist for your own tasks on an iPhone or iPad, none of those apply — and Taven will likely save you both time and money.</p>
 
-    <h2>Where Taven is better</h2>
-    <ul>
-      <li><strong>Deciding what to do next.</strong> In Todoist, you set priorities and build filters, then decide yourself. Taven's AI weighs importance, due dates and recurrence and shows one suggested task with a reason. No setup.</li>
-      <li><strong>Privacy.</strong> Taven has no accounts, no servers holding your tasks, no third-party SDKs, and its AI runs on-device. Todoist requires an account and stores tasks in the cloud.</li>
-      <li><strong>Price.</strong> Taven is free with no subscription. Todoist's free plan is limited, and features like reminders and AI help come with paid plans.</li>
-      <li><strong>Habits built in.</strong> Every recurring task in Taven becomes a habit with its own streak and history, and you can skip a day without losing track.</li>
-      <li><strong>Simplicity.</strong> Taven has fewer features on purpose. There's less to configure and less to maintain.</li>
-    </ul>
+    <h2>Switching from Todoist to Taven</h2>
+    <ol>
+      <li><a href="{APP}">Download Taven</a> — it's free and there's no account to create.</li>
+      <li>Add what's due in the next week first. You don't need to move your whole backlog on day one.</li>
+      <li>Recreate your recurring tasks; each one becomes a habit with a streak automatically.</li>
+      <li>Turn on iCloud sync if you use both iPhone and iPad.</li>
+      <li>Tomorrow morning, open Taven and do the task it suggests.</li>
+    </ol>
 
-    <h2>Which should you choose?</h2>
+    <h2>The verdict</h2>
     <div class="verdict">
-      <div class="card frost"><h3>Choose Todoist if…</h3><ul>
-        <li>You use Android, Windows or a browser, not just Apple devices</li>
-        <li>You share tasks or projects with a team, partner or family</li>
-        <li>You want to build a detailed system with labels and filters</li>
-        <li>You need integrations with other tools</li>
-      </ul></div>
       <div class="card frost"><h3>Choose Taven if…</h3><ul>
         <li>You're on iPhone or iPad</li>
-        <li>You often freeze at your list and want to be told what to do next</li>
+        <li>You want to be told what to do next, not build a system</li>
         <li>You want your tasks private, with no account</li>
-        <li>You want a capable app for free, with no subscription</li>
+        <li>You'd rather not pay a subscription</li>
+        <li>You want habits and streaks built into your tasks</li>
       </ul></div>
-    </div>
-    <p>Many people try both: Todoist as a team or work hub, Taven for personal tasks and habits.</p>''',
+      <div class="card frost"><h3>Stick with Todoist if…</h3><ul>
+        <li>You need Android, Windows or web access</li>
+        <li>You manage shared projects with a team</li>
+        <li>You rely on third-party integrations</li>
+      </ul></div>
+    </div>''',
     faqs=[
-        ("Is Taven a good Todoist alternative?", "Yes, if you're on iPhone or iPad and use Todoist mainly for personal tasks. Taven is free, needs no account and automatically suggests what to do next. If you rely on Todoist's cross-platform sync, shared projects or integrations, Taven isn't a replacement."),
+        ("Is Taven a good Todoist alternative?", "Yes — especially if you're on iPhone or iPad and use Todoist for personal tasks. Taven is free with no subscription, needs no account, keeps your data on your device, and automatically suggests what to do next. If you need Android, Windows or team collaboration, Todoist remains the better fit."),
+        ("Why switch from Todoist to Taven?", "The main reasons are automatic prioritization (Taven picks your next task and explains why), privacy (no account, on-device AI, zero data collected), price (free, no subscription) and built-in habit streaks for every recurring task."),
         ("Is Taven free?", "Yes. Taven is free to download with no subscription and no account."),
-        ("Does Taven work on Android or Windows?", "No. Taven is currently available for iPhone and iPad. If you need Android, Windows or web access, Todoist is the better choice."),
-        ("Can I share tasks with others in Taven?", "Not currently. Taven is designed for personal task management. For shared projects, Todoist is a strong option."),
+        ("Does Taven work on Android or Windows?", "No. Taven is available for iPhone and iPad, and syncs between them through your private iCloud account."),
     ],
-    related=["compare/taven-vs-ticktick.html", "guides/best-task-manager-apps-iphone.html", "guides/best-ai-to-do-list-apps.html"],
+    related=["compare/taven-vs-ticktick.html", "guides/best-task-manager-apps-iphone.html", "guides/what-task-to-do-next.html"],
 ))
 
 # 6. Taven vs TickTick
 PAGES.append(dict(
     kind="compare", path="compare/taven-vs-ticktick.html",
     label="Comparison", short="Taven vs. TickTick",
-    blurb="A focused app that picks your next task vs. the feature-packed all-in-one. Who each is for.",
-    title="Taven vs. TickTick (2026): Honest Comparison & TickTick Alternative — Taven",
-    desc="An honest comparison of Taven and TickTick: features, AI, privacy, platforms and pricing. TickTick wins on Pomodoro, calendar views and cross-platform support; Taven wins on deciding what to do next, simplicity, privacy and price.",
+    blurb="Why people switch from TickTick to Taven: one clear answer instead of more views, real privacy and no Premium.",
+    title="Taven vs. TickTick (2026): The Simpler, Private TickTick Alternative for iPhone — Taven",
+    desc="Taven vs. TickTick compared: Taven tells you what to do next with on-device AI, builds habit streaks into your tasks, needs no account and is free with no Premium tier. See where each app wins.",
     h1="Taven vs. <span>TickTick</span>",
     h1_plain="Taven vs. TickTick",
-    lede="TickTick packs tasks, a calendar, a habit tracker and a focus timer into one app. Taven does fewer things and makes the main decision for you. Here's how they compare.",
-    answer="Choose <strong>TickTick</strong> if you want an all-in-one app with a Pomodoro timer, calendar views and an Eisenhower matrix, or you need Android, Windows or web access. Choose <strong>Taven</strong> if you're on iPhone or iPad and want the app to <strong>tell you what to do next</strong> rather than give you more views to manage — privately, with no account, for free.",
-    body=f'''    {DISCLOSURE.replace("every app here is", "both apps are")}
+    lede="TickTick gives you more ways to look at your tasks. Taven gives you one answer: what to do next. Here's how they compare, and why people who feel buried in features switch to Taven.",
+    answer="<strong>Taven</strong> is the better choice if you're on iPhone or iPad and want a calm app that <strong>tells you what to do next</strong> instead of adding more views to manage. It's <strong>free with no Premium tier</strong>, needs <strong>no account</strong>, builds <strong>habit streaks into every recurring task</strong>, and runs its AI <strong>privately on your device</strong>. TickTick is the better fit if you need a built-in Pomodoro timer, calendar views, or Android, Windows or web access.",
+    body=f'''    {COMPARE_DISCLOSURE.format(other="TickTick")}
 
-    <h2>At a glance</h2>
+    <h2>Why choose Taven over TickTick</h2>
+{benefit("1. One answer instead of more views", "TickTick offers lists, a calendar, an Eisenhower matrix, a habit tracker and a focus timer — powerful, but every view is another place to look and another decision to make. Taven's on-device AI weighs importance, due dates and recurrence and puts one <strong>AI Suggested</strong> task at the top, with the reason why. Less looking, more doing.")}
+{benefit("2. Free, with no Premium paywall", "Taven is free with no subscription. Many of TickTick's standout features, including its full calendar views, require a Premium subscription.")}
+{benefit("3. Private by design", "Taven has no accounts, no servers holding your tasks and no third-party SDKs, and it collects zero data. Its AI runs on your device. TickTick requires an account and syncs your tasks through its cloud.")}
+{benefit("4. Habits that live inside your tasks", "TickTick keeps habits in a separate tracker you maintain alongside your task list. In Taven, a recurring task <em>is</em> the habit: it gets its own streak and history automatically, and you can skip a day without losing track.")}
+{benefit("5. A calmer app", "Fewer features is a feature. Taven has less to configure, fewer places for tasks to hide and nothing pulling your attention away from the one thing you should be doing.")}
+{benefit("6. Analytics that keep you honest", "Completion rings, weekly charts, monthly heatmaps, your best day and a “Today's Intensity” gauge that shows when you've planned more than you can finish.")}
+
+    <h2>A typical morning in each app</h2>
+    <div class="verdict">
+{day("TickTick", ["Open the app", "Choose a view: list, calendar or matrix", "Check your habits in the habit tracker", "Sort out what's urgent versus important", "Pick a task and start a focus timer"])}
+{day("Taven", ["Open the app", "See your AI Suggested task and why it's first", "Start it — your habits are already in your task list"])}
+    </div>
+
+    <h2>Side by side</h2>
     <div class="table-wrap"><table class="data-table">
       <thead><tr><th></th><th>Taven</th><th>TickTick</th></tr></thead>
       <tbody>
-        <tr><td>Core idea</td><td>Tells you what to do next</td><td>All-in-one productivity toolkit</td></tr>
-        <tr><td>Platforms</td><td>iPhone, iPad</td><td>iOS, Android, Mac, Windows, web</td></tr>
-        <tr><td>Price</td><td>Free, no subscription</td><td>Free plan; Premium subscription</td></tr>
-        <tr><td>Account</td><td>None</td><td>Required</td></tr>
-        <tr><td>Where tasks are stored</td><td>On your device (optional private iCloud sync)</td><td>TickTick's servers</td></tr>
-        <tr><td>Prioritization</td><td>Automatic AI suggestion with a reason</td><td>Manual priorities and an Eisenhower matrix view</td></tr>
-        <tr><td>Habits</td><td>Every recurring task becomes a habit with streaks</td><td>Separate, dedicated habit tracker</td></tr>
-        <tr><td>Focus timer</td><td>No</td><td>Built-in Pomodoro and stopwatch</td></tr>
-        <tr><td>Calendar views</td><td>No</td><td>Day, week, month and more (fuller views on Premium)</td></tr>
+        <tr><td>Decides what to do next</td><td><strong>Yes — AI suggestion with a reason</strong></td><td>No — manual priorities and matrix view</td></tr>
+        <tr><td>Price</td><td><strong>Free, no subscription</strong></td><td>Free plan; Premium subscription for full features</td></tr>
+        <tr><td>Account required</td><td><strong>No</strong></td><td>Yes</td></tr>
+        <tr><td>Where your tasks live</td><td><strong>On your device</strong> (optional private iCloud sync)</td><td>TickTick's servers</td></tr>
+        <tr><td>Data collected</td><td><strong>None</strong></td><td>Account and usage data</td></tr>
+        <tr><td>Habits</td><td><strong>Built into every recurring task</strong></td><td>Separate habit tracker</td></tr>
         <tr><td>Analytics</td><td>Completion rings, weekly charts, monthly heatmaps, daily intensity</td><td>Completion and focus statistics</td></tr>
-        <tr><td>Collaboration</td><td>No</td><td>Shared lists</td></tr>
+        <tr><td>Focus timer</td><td>No</td><td>Built-in Pomodoro</td></tr>
+        <tr><td>Calendar views</td><td>No</td><td>Yes (fuller views on Premium)</td></tr>
+        <tr><td>Platforms</td><td>iPhone, iPad</td><td>iOS, Android, Mac, Windows, web</td></tr>
+        <tr><td>Shared lists</td><td>No</td><td>Yes</td></tr>
       </tbody>
     </table></div>
 
-    <h2>Where TickTick is better</h2>
+    <h2>When TickTick might be the better fit</h2>
+    <p>TickTick is a capable all-in-one app. It may suit you better if:</p>
     <ul>
-      <li><strong>More tools in one place.</strong> The Pomodoro timer, calendar views and dedicated habit tracker mean you may not need any other productivity app.</li>
-      <li><strong>Cross-platform.</strong> TickTick runs on Android, Windows, Mac and the web. Taven is iPhone and iPad only.</li>
-      <li><strong>Manual prioritization views.</strong> If you like sorting tasks yourself, TickTick's Eisenhower matrix view is excellent.</li>
-      <li><strong>Natural-language entry and shared lists.</strong> Quick to capture dated tasks, and you can share lists with others.</li>
+      <li>You want a <strong>Pomodoro focus timer</strong> or <strong>calendar view</strong> inside your task app.</li>
+      <li>You need <strong>Android, Windows or web</strong> access — Taven is iPhone and iPad only.</li>
+      <li>You <strong>share lists</strong> with other people.</li>
     </ul>
+    <p>If what you actually want is to stop deliberating and start working, Taven's focus on one clear next step is the advantage.</p>
 
-    <h2>Where Taven is better</h2>
-    <ul>
-      <li><strong>It makes the decision.</strong> TickTick gives you many ways to look at your tasks. Taven gives you one answer: the task to do next, with the reason.</li>
-      <li><strong>Calmer and simpler.</strong> Fewer features means less to configure and fewer places for tasks to hide.</li>
-      <li><strong>Privacy.</strong> No account, no servers holding your tasks, no third-party SDKs, on-device AI. TickTick requires an account and syncs through its cloud.</li>
-      <li><strong>Price.</strong> Taven is free with no subscription. Many of TickTick's standout features require Premium.</li>
-      <li><strong>Habits connected to tasks.</strong> In Taven, a recurring task <em>is</em> the habit, with its streak and history, rather than a separate tracker to maintain.</li>
-    </ul>
+    <h2>Switching from TickTick to Taven</h2>
+    <ol>
+      <li><a href="{APP}">Download Taven</a> — it's free and there's no account to create.</li>
+      <li>Add what's due in the next week first. You don't need to move your whole backlog on day one.</li>
+      <li>Turn each TickTick habit into a recurring task in Taven — it gets a streak automatically.</li>
+      <li>Turn on iCloud sync if you use both iPhone and iPad.</li>
+      <li>Tomorrow morning, open Taven and do the task it suggests.</li>
+    </ol>
 
-    <h2>Which should you choose?</h2>
+    <h2>The verdict</h2>
     <div class="verdict">
-      <div class="card frost"><h3>Choose TickTick if…</h3><ul>
-        <li>You want a Pomodoro timer and calendar built into your task app</li>
-        <li>You use Android, Windows or the web</li>
-        <li>You like organizing tasks with views like the Eisenhower matrix</li>
-        <li>You share lists with others</li>
-      </ul></div>
       <div class="card frost"><h3>Choose Taven if…</h3><ul>
         <li>You're on iPhone or iPad</li>
-        <li>Too many features and views make you procrastinate</li>
-        <li>You want the app to tell you what to do next</li>
+        <li>Too many views and features make you procrastinate</li>
+        <li>You want to be told what to do next</li>
         <li>You want privacy and no subscription</li>
+        <li>You want habits tracked right inside your tasks</li>
+      </ul></div>
+      <div class="card frost"><h3>Stick with TickTick if…</h3><ul>
+        <li>You rely on a built-in Pomodoro timer or calendar</li>
+        <li>You need Android, Windows or web access</li>
+        <li>You share lists with others</li>
       </ul></div>
     </div>''',
     faqs=[
-        ("Is Taven a good TickTick alternative?", "Yes, if you're on iPhone or iPad and want something simpler that decides what to do next for you, privately and for free. If you depend on TickTick's Pomodoro timer, calendar views or cross-platform sync, stay with TickTick."),
+        ("Is Taven a good TickTick alternative?", "Yes — especially if you're on iPhone or iPad and feel TickTick has more features than you use. Taven is free with no Premium tier, needs no account, keeps your data on your device, builds habit streaks into recurring tasks, and tells you what to do next."),
+        ("Why switch from TickTick to Taven?", "People switch for a simpler app that makes the prioritization decision for them, for privacy (no account, on-device AI, zero data collected), and to avoid paying for Premium."),
         ("Does Taven have a habit tracker?", "Yes. Every recurring task in Taven (daily, weekly, monthly or yearly) becomes a habit with its own streak and history, and you can skip a day without losing track."),
-        ("Does Taven have a Pomodoro timer?", "No. Taven focuses on choosing the right task. If a built-in focus timer is important to you, TickTick includes one."),
-        ("Is Taven free?", "Yes. Taven is free with no subscription and no account."),
+        ("Does Taven have a Pomodoro timer?", "No. Taven focuses on choosing the right task to work on. If a built-in focus timer is essential to you, TickTick includes one."),
     ],
-    related=["compare/taven-vs-todoist.html", "guides/best-task-manager-apps-iphone.html", "guides/what-task-to-do-next.html"],
+    related=["compare/taven-vs-todoist.html", "guides/best-task-manager-apps-iphone.html", "guides/to-do-list-overwhelm.html"],
 ))
-
 
 # ─────────────────────────────────────────────────────────────
 # FAQ page (/faq.html): list of (group heading, [(question, answer_html), ...])
