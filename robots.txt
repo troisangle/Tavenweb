@@ -1,0 +1,52 @@
+# Taven — tavenproductivity.com
+# All crawlers are welcome, including AI search and AI training crawlers.
+
+# OpenAI (ChatGPT search, ChatGPT browsing, model training)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google (Search, Gemini) and Apple (Siri, Spotlight, Apple Intelligence)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Microsoft Bing (also powers Copilot and much of ChatGPT search)
+User-agent: Bingbot
+Allow: /
+
+# Everyone else
+User-agent: *
+Allow: /
+
+Sitemap: https://tavenproductivity.com/sitemap.xml
