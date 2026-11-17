@@ -27,8 +27,9 @@ def nav(current):
     <nav aria-label="Main">
       <ul class="nav-links">
         {li("/", "Product", "home")}
-        {li("/#features", "Features", "features")}
+        {li("/features.html", "Features", "features")}
         {li("/guides/", "Guides", "guides")}
+        {li("/faq.html", "FAQ", "faq")}
         {li("/privacy.html", "Privacy", "privacy")}
         {li("mailto:tavenproductivity@gmail.com", "Contact", "contact")}
       </ul>
@@ -50,8 +51,8 @@ FOOTER = f'''<footer class="footer">
       <div>
         <h4>Product</h4>
         <ul>
-          <li><a href="/#features">Features</a></li>
-          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
           <li><a href="{APP}">Download</a></li>
         </ul>
       </div>
@@ -239,7 +240,47 @@ def render_hub():
     os.makedirs(os.path.join(ROOT, "guides"), exist_ok=True)
     open(os.path.join(ROOT, "guides/index.html"), "w").write(out)
 
-for p in PAGES:
-    render(p)
-render_hub()
-print("built", len(PAGES) + 1, "pages")
+def render_faq():
+    from content import FAQ
+    url = SITE + "/faq.html"
+    title = "Taven FAQ — Pricing, Privacy, Devices & How It Works"
+    desc = "Answers to common questions about Taven, the free AI to-do list and task manager for iPhone and iPad: how it picks your next task, pricing, accounts, privacy, devices and habits."
+    jsonld = {"@context": "https://schema.org", "@type": "FAQPage", "url": url, "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": strip_tags(a)}}
+        for g, items in FAQ for q, a in items]}
+    groups = []
+    for g, items in FAQ:
+        qs = "\n".join(f'      <details class="frost"><summary>{esc(q)}</summary><p>{a}</p></details>' for q, a in items)
+        groups.append(f'    <h2>{g}</h2>\n    <div class="faq">\n{qs}\n    </div>')
+    page_head = head(title, desc, url, jsonld).replace('content="article"', 'content="website"')
+    out = f"""{page_head}
+<body>
+
+{nav("faq")}
+
+<main class="container">
+  <section class="page-head">
+    <div class="label">FAQ</div>
+    <h1 class="h1">Questions, <span>answered.</span></h1>
+    <p class="lede">Everything people usually ask about Taven. Can't find your answer? <a class="inline" href="mailto:tavenproductivity@gmail.com">Email us</a>.</p>
+  </section>
+
+  <article class="article" style="padding-top:0">
+{chr(10).join(groups)}
+  </article>
+
+  {CTA}
+</main>
+
+{FOOTER}
+</body>
+</html>
+"""
+    open(os.path.join(ROOT, "faq.html"), "w").write(out)
+
+if __name__ == "__main__":
+    for p in PAGES:
+        render(p)
+    render_hub()
+    render_faq()
+    print("built", len(PAGES) + 2, "pages")

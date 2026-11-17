@@ -75,6 +75,7 @@ a { color: inherit; }
 .label { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--opp-acc); margin-bottom: 14px; }
 .h1 { font-size: clamp(36px, 5.5vw, 60px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: rgba(var(--opp-back-rgb), .95); margin-bottom: 18px; }
 .h1 span { color: var(--opp-acc); }
+.lede a.inline { color: var(--opp-acc); font-weight: 700; text-underline-offset: 3px; }
 .lede { font-size: 19px; line-height: 1.6; color: rgba(var(--opp-back-rgb), .72); }
 .updated {
   display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; padding: 6px 14px; border-radius: 999px;
