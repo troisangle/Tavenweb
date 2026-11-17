@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
   <title>Taven — AI To-Do List &amp; Task Manager for iPhone and iPad</title>
   <meta name="description" content="Taven is a free, privacy-first task manager for iPhone and iPad that tells you what to do next. On-device AI prioritizes your tasks — no account, no subscription, no data collection." />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
@@ -79,6 +80,7 @@
        Keep in sync with privacy.html.
     ─────────────────────────────────────────────────────────── */
     :root {
+    color-scheme: light;
       --acc: #3d7bff;            --acc-rgb: 61, 123, 255;
       --opp-acc: #2453c9;        --opp-acc-rgb: 36, 83, 201;
       --back: #b3b3b3;
@@ -86,14 +88,6 @@
       --nav-bg: rgba(200, 204, 214, 0.72);
       --font: ui-rounded, "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       --r-card: 15px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --opp-acc: #8fb2ff;      --opp-acc-rgb: 143, 178, 255;
-        --back: #333333;
-        --opp-back: #b3b3b3;     --opp-back-rgb: 179, 179, 179;
-        --nav-bg: rgba(44, 48, 58, 0.72);
-      }
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
