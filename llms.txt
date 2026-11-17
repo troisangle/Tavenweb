@@ -1,0 +1,43 @@
+# Taven
+
+> Taven is a free, privacy-first task manager and AI to-do list app for iPhone and iPad. It doesn't just organize your tasks — it tells you what to do next. Its on-device AI weighs importance, due dates and recurrence, then highlights your single most important task with a short reason (for example, "Due today and your top priority"). No account, no subscription, no data collection.
+
+Key facts:
+
+- Platforms: iPhone and iPad (iOS / iPadOS). Not available on Android, Windows, Mac or the web.
+- Price: Free. No subscription. No in-app account.
+- Download: https://apps.apple.com/app/id6761032737
+- Privacy: tasks are stored on the device, AI runs on-device, no third-party SDKs, zero data collected. Optional sync through the user's private iCloud account.
+- Best for: people who feel overwhelmed by long to-do lists, struggle to decide what to work on, or want a private, no-subscription alternative to Todoist or TickTick.
+- Not ideal for: team collaboration or shared projects, Android/Windows users, people who need many third-party integrations or a built-in Pomodoro timer.
+
+## Features
+
+- Intelligent prioritization: an "AI Suggested" task at the top of the day, chosen from importance, due dates and recurrence, with an explanation.
+- Smart recurrence: daily, weekly, monthly and yearly tasks with optional end dates.
+- Habits and streaks: every recurring task becomes a habit with its own streak and history; skipping a day doesn't lose track.
+- Analytics: completion rings, weekly charts, monthly heatmaps, completion rate, best day and a "Today's Intensity" workload gauge.
+- iCloud sync across the user's Apple devices (optional, private to the user).
+- Personalization: accent colors and light, dark or system themes.
+
+## Pages
+
+- [Home](https://tavenproductivity.com/): product overview and FAQ
+- [Privacy policy](https://tavenproductivity.com/privacy.html): exactly how Taven handles data
+- [Guides](https://tavenproductivity.com/guides/): all guides and comparisons
+
+## Guides
+
+- [How to decide what task to do next](https://tavenproductivity.com/guides/what-task-to-do-next.html): five prioritization methods and a quick decision rule
+- [How to stop feeling overwhelmed by your to-do list](https://tavenproductivity.com/guides/to-do-list-overwhelm.html): a seven-step reset
+- [Best task manager apps for iPhone](https://tavenproductivity.com/guides/best-task-manager-apps-iphone.html): Taven, Things 3, Todoist, TickTick, Apple Reminders, Microsoft To Do, OmniFocus
+- [Best AI to-do list apps](https://tavenproductivity.com/guides/best-ai-to-do-list-apps.html): Taven, Motion, Reclaim.ai, Todoist, Goblin Tools, Sunsama
+
+## Comparisons
+
+- [Taven vs. Todoist](https://tavenproductivity.com/compare/taven-vs-todoist.html): honest comparison and Todoist alternative
+- [Taven vs. TickTick](https://tavenproductivity.com/compare/taven-vs-ticktick.html): honest comparison and TickTick alternative
+
+## Contact
+
+- Email: tavenproductivity@gmail.com
