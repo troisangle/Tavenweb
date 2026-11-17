@@ -269,6 +269,17 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
     }
+
+    /* MOBILE MENU */
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .menu { position: relative; display: none; }
+    @media (max-width: 900px) { .menu { display: block; } }
+    .menu summary { list-style: none; cursor: pointer; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(var(--opp-back-rgb), .08); }
+    .menu summary::-webkit-details-marker { display: none; }
+    .menu summary svg { width: 22px; height: 22px; }
+    .menu ul { position: absolute; right: 0; top: 50px; min-width: 200px; list-style: none; padding: 8px; border-radius: 14px; background: #fff; border: 1px solid rgba(var(--opp-acc-rgb), .15); box-shadow: 0 12px 32px rgba(20, 30, 60, .14); }
+    .menu a { display: block; padding: 11px 14px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700; color: var(--opp-back); }
+    .menu a:hover { background: rgba(var(--acc-rgb), .1); color: var(--opp-acc); }
   </style>
 </head>
 <body>
@@ -283,14 +294,17 @@
       <ul class="nav-links">
         <li><a href="/">Product</a></li>
         <li><a href="/features.html" aria-current="page">Features</a></li>
-        <li><a href="/what-users-like.html">What users like</a></li>
+        <li><a href="/user-response.html">User response</a></li>
         <li><a href="/guides/">Guides</a></li>
         <li><a href="/faq.html">FAQ</a></li>
         <li><a href="/privacy.html">Privacy</a></li>
         <li><a href="mailto:tavenproductivity@gmail.com">Contact</a></li>
       </ul>
     </nav>
-    <a href="https://apps.apple.com/app/id6761032737" class="btn btn-primary btn-sm">Download</a>
+    <div class="nav-right">
+      <a href="https://apps.apple.com/app/id6761032737" class="btn btn-primary btn-sm">Download</a>
+      <details class="menu"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><ul><li><a href="/">Product</a></li><li><a href="/features.html">Features</a></li><li><a href="/user-response.html">User response</a></li><li><a href="/guides/">Guides</a></li><li><a href="/faq.html">FAQ</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="mailto:tavenproductivity@gmail.com">Contact</a></li></ul></details>
+    </div>
   </div>
 </header>
 
@@ -397,7 +411,7 @@
   <!-- CTA -->
   <section class="cta frost">
     <h2>Ready to take back your <span>focus?</span></h2>
-    <p>Free to download. No subscription. No account required.</p>
+    <p>Free to download. No subscription. No account required. <a href="/user-response.html" style="color:var(--opp-acc);font-weight:800">See what users love →</a></p>
     <a href="https://apps.apple.com/app/id6761032737" class="btn btn-primary">Download on the App Store</a>
   </section>
 </main>
@@ -416,7 +430,7 @@
         <h4>Product</h4>
         <ul>
           <li><a href="/features.html">Features</a></li>
-          <li><a href="/what-users-like.html">What users like</a></li>
+          <li><a href="/user-response.html">User response</a></li>
           <li><a href="/faq.html">FAQ</a></li>
           <li><a href="https://apps.apple.com/app/id6761032737">Download</a></li>
         </ul>
