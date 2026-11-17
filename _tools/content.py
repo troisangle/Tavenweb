@@ -20,8 +20,8 @@ def card(name, tag, best_for, platforms, price, strengths, tradeoffs, extra=""):
         <dt>Best for</dt><dd>{best_for}</dd>
         <dt>Platforms</dt><dd>{platforms}</dd>
         <dt>Price</dt><dd>{price}</dd>
-        <dt>What's good</dt><dd>{strengths}</dd>
-        <dt>The catch</dt><dd>{tradeoffs}</dd>
+        <dt>Highlights</dt><dd>{strengths}</dd>
+        <dt>Downsides</dt><dd>{tradeoffs}</dd>
       </dl>
     </div>'''
 
