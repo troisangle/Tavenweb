@@ -1,21 +1,14 @@
 /* Shared styles for guide + comparison pages.
    Palette mirrors getColors() in Funcs.swift — keep in sync with index.html and privacy.html. */
 :root {
+  color-scheme: light;
   --acc: #3d7bff;            --acc-rgb: 61, 123, 255;
   --opp-acc: #2453c9;        --opp-acc-rgb: 36, 83, 201;
-  --back: #b3b3b3;
+  --back: #f7f8fb;
   --opp-back: #333333;       --opp-back-rgb: 51, 51, 51;
-  --nav-bg: rgba(200, 204, 214, 0.72);
+  --nav-bg: rgba(255, 255, 255, 0.8);
   --font: ui-rounded, "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --r-card: 15px;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --opp-acc: #8fb2ff;      --opp-acc-rgb: 143, 178, 255;
-    --back: #333333;
-    --opp-back: #b3b3b3;     --opp-back-rgb: 179, 179, 179;
-    --nav-bg: rgba(44, 48, 58, 0.72);
-  }
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,7 +17,7 @@ body {
   font-family: var(--font);
   color: var(--opp-back);
   background-color: var(--back);
-  background-image: linear-gradient(135deg, rgba(var(--acc-rgb), 0.3), var(--back) 70%);
+  background-image: linear-gradient(135deg, rgba(var(--acc-rgb), 0.12), var(--back) 60%);
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
@@ -35,7 +28,8 @@ a { color: inherit; }
 @media (min-width: 900px) { .container { padding: 0 48px; } }
 
 .frost {
-  background: rgba(var(--opp-back-rgb), 0.1);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 1px 2px rgba(20, 30, 60, 0.04), 0 8px 24px rgba(20, 30, 60, 0.05);
   border: 2px solid rgba(var(--opp-acc-rgb), 0.15);
   border-radius: var(--r-card);
 }
@@ -56,7 +50,9 @@ a { color: inherit; }
 .nav-links a { display: block; padding: 8px 14px; border-radius: 999px; text-decoration: none; font-size: 15px; font-weight: 700; color: rgba(var(--opp-back-rgb), 0.7); transition: background .2s, color .2s; }
 .nav-links a:hover { background: rgba(var(--opp-back-rgb), 0.1); color: var(--opp-back); }
 .nav-links a[aria-current="page"] { color: var(--opp-acc); }
-@media (max-width: 720px) { .nav-links { display: none; } }
+.nav-links a { white-space: nowrap; }
+    @media (max-width: 1120px) { .nav-links { gap: 0; } .nav-links a { padding: 8px 10px; font-size: 14px; } }
+    @media (max-width: 900px) { .nav-links { display: none; } }
 
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px; font-size: 16px; font-weight: 800; text-decoration: none; transition: transform .15s ease-out, filter .2s; }
 .btn:active { transform: scale(0.97); }
@@ -162,3 +158,26 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* WHAT USERS LIKE */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.chip { padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--opp-acc); background: rgba(var(--acc-rgb), .15); border: 1px solid rgba(var(--acc-rgb), .3); }
+.chip:hover { background: rgba(var(--acc-rgb), .25); }
+.themes { display: grid; gap: 18px; max-width: 900px; padding-top: 24px; }
+.theme { display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 30px; }
+@media (max-width: 560px) { .theme { grid-template-columns: 1fr; gap: 6px; padding: 22px; } }
+.theme-n { font-size: 34px; font-weight: 800; color: var(--opp-acc); line-height: 1; }
+.theme h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+.theme h3 { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: rgba(var(--opp-back-rgb), .5); margin: 18px 0 6px; }
+.theme p { font-size: 17px; line-height: 1.7; color: rgba(var(--opp-back-rgb), .8); }
+.theme a { color: var(--opp-acc); font-weight: 800; text-underline-offset: 3px; }
+.theme p:last-child { margin-top: 14px; }
+.quote { margin: 14px 0 0; padding: 14px 18px; border-left: 3px solid var(--opp-acc); border-radius: 8px; background: rgba(var(--opp-back-rgb), .06); }
+.quote p { font-style: italic; }
+.quote cite { display: block; margin-top: 6px; font-size: 14px; font-style: normal; font-weight: 700; color: rgba(var(--opp-back-rgb), .6); }
+.share { margin-top: 40px; max-width: 900px; padding: 30px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+.share h2 { font-size: 24px; font-weight: 800; }
+.share p { margin-top: 6px; font-size: 16px; line-height: 1.6; color: rgba(var(--opp-back-rgb), .7); max-width: 460px; }
+.share-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-ghost { background: rgba(var(--opp-back-rgb), .1); border: 2px solid rgba(var(--opp-acc-rgb), .2); color: var(--opp-back); }
+.btn-ghost:hover { background: rgba(var(--opp-back-rgb), .16); }

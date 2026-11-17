@@ -28,6 +28,7 @@ def nav(current):
       <ul class="nav-links">
         {li("/", "Product", "home")}
         {li("/features.html", "Features", "features")}
+        {li("/what-users-like.html", "What users like", "users")}
         {li("/guides/", "Guides", "guides")}
         {li("/faq.html", "FAQ", "faq")}
         {li("/privacy.html", "Privacy", "privacy")}
@@ -52,6 +53,7 @@ FOOTER = f'''<footer class="footer">
         <h4>Product</h4>
         <ul>
           <li><a href="/features.html">Features</a></li>
+          <li><a href="/what-users-like.html">What users like</a></li>
           <li><a href="/faq.html">FAQ</a></li>
           <li><a href="{APP}">Download</a></li>
         </ul>
@@ -93,6 +95,7 @@ def head(title, desc, url, jsonld):
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(desc)}" />
   <meta name="robots" content="index, follow, max-snippet:-1" />
@@ -278,9 +281,71 @@ def render_faq():
 """
     open(os.path.join(ROOT, "faq.html"), "w").write(out)
 
+def render_users():
+    from content import USERS
+    url = SITE + "/what-users-like.html"
+    title = "What Users Like About Taven — Design, AI Suggestions, Habits, Calendar & Stats"
+    desc = "What Taven users tell us they love: the simple, aesthetic design, the AI Suggest feature, habits and one-time tasks together, the calendar and completion statistics."
+    jsonld = {"@context": "https://schema.org", "@type": "WebPage", "name": "What users like about Taven",
+              "url": url, "description": desc, "publisher": ORG,
+              "about": {"@type": "MobileApplication", "name": "Taven", "operatingSystem": "iOS, iPadOS", "url": SITE + "/"}}
+    jump = "".join(f'<a class="chip" href="#{t["id"]}">{t["title"]}</a>' for t in USERS)
+    blocks = []
+    for i, t in enumerate(USERS, 1):
+        quotes = "".join(f'<blockquote class="quote"><p>“{esc(q)}”</p><cite>— {esc(who)}</cite></blockquote>' for q, who in t["quotes"])
+        blocks.append(f"""    <section class="theme frost" id="{t["id"]}">
+      <div class="theme-n">{i:02d}</div>
+      <div>
+        <h2>{t["title"]}</h2>
+        <h3>What users tell us</h3>
+        <p>{t["said"]}</p>{quotes}
+        <h3>Why it matters</h3>
+        <p>{t["why"]}</p>
+        <p><a href="{t["link"][0]}">{t["link"][1]} →</a></p>
+      </div>
+    </section>""")
+    page_head = head(title, desc, url, jsonld).replace('content="article"', 'content="website"')
+    out = f"""{page_head}
+<body>
+
+{nav("users")}
+
+<main class="container">
+  <section class="page-head">
+    <div class="label">What users like</div>
+    <h1 class="h1">Why people <span>stick with</span> Taven.</h1>
+    <p class="lede">We read every message we get. These are the five things Taven users bring up most.</p>
+    <div class="chips">{jump}</div>
+  </section>
+
+  <div class="themes">
+{chr(10).join(blocks)}
+  </div>
+
+  <section class="share frost">
+    <div>
+      <h2>Tell us what you like</h2>
+      <p>Using Taven? A quick App Store review helps other people find it, and we read every email.</p>
+    </div>
+    <div class="share-actions">
+      <a class="btn btn-primary" href="{APP}?action=write-review">Write a review</a>
+      <a class="btn btn-ghost" href="mailto:tavenproductivity@gmail.com">Email us</a>
+    </div>
+  </section>
+
+  {CTA}
+</main>
+
+{FOOTER}
+</body>
+</html>
+"""
+    open(os.path.join(ROOT, "what-users-like.html"), "w").write(out)
+
 if __name__ == "__main__":
     for p in PAGES:
         render(p)
     render_hub()
     render_faq()
-    print("built", len(PAGES) + 2, "pages")
+    render_users()
+    print("built", len(PAGES) + 3, "pages")

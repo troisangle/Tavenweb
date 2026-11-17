@@ -25,7 +25,7 @@ TAVEN_CARD = lambda tag: card(
     "People who don't want to manage a system — they want to open the app and be told what to do next.",
     "iPhone and iPad",
     "Free. No subscription, no in-app account.",
-    "On-device AI picks your top task and explains why (“Due today and your top priority”). Smart recurrence for daily, weekly, monthly and yearly tasks, habit streaks, completion analytics, optional iCloud sync. No account, no tracking, no third-party SDKs.",
+    "On-device AI picks your top task and explains why (“Due today and your top priority”). A clean, minimal design, a built-in calendar, smart recurrence for daily, weekly, monthly and yearly tasks, habit streaks, completion analytics, optional iCloud sync. No account, no tracking, no third-party SDKs.",
     "Apple devices only. No team collaboration or shared projects. Fewer integrations and power-user views than long-established apps.")
 
 # ─────────────────────────────────────────────────────────────
@@ -77,7 +77,7 @@ PAGES.append(dict(
       <li><strong>You use Android or Windows too:</strong> Todoist or TickTick.</li>
       <li><strong>You share task lists with a team or partner:</strong> Todoist, or Apple Reminders for simple shared lists.</li>
       <li><strong>You want to buy once, not subscribe, and love design:</strong> Things 3.</li>
-      <li><strong>You want a focus timer and habit tracker built in:</strong> TickTick (Taven also tracks habits and streaks, but has no Pomodoro timer).</li>
+      <li><strong>You want a focus timer built in:</strong> TickTick. (Taven has a calendar and habit streaks, but no Pomodoro timer.)</li>
       <li><strong>Privacy matters most:</strong> Taven (no account, on-device AI) or Things 3.</li>
     </ul>''',
     faqs=[
@@ -351,12 +351,12 @@ PAGES.append(dict(
     h1="Taven vs. <span>TickTick</span>",
     h1_plain="Taven vs. TickTick",
     lede="TickTick gives you more ways to look at your tasks. Taven gives you one answer: what to do next. Here's how they compare, and why people who feel buried in features switch to Taven.",
-    answer="<strong>Taven</strong> is the better choice if you're on iPhone or iPad and want a calm app that <strong>tells you what to do next</strong> instead of adding more views to manage. It's <strong>free with no Premium tier</strong>, needs <strong>no account</strong>, builds <strong>habit streaks into every recurring task</strong>, and runs its AI <strong>privately on your device</strong>. TickTick is the better fit if you need a built-in Pomodoro timer, calendar views, or Android, Windows or web access.",
+    answer="<strong>Taven</strong> is the better choice if you're on iPhone or iPad and want a calm app that <strong>tells you what to do next</strong> instead of adding more views to manage. It's <strong>free with no Premium tier</strong>, needs <strong>no account</strong>, builds <strong>habit streaks into every recurring task</strong>, and runs its AI <strong>privately on your device</strong>. TickTick is the better fit if you need a built-in Pomodoro timer, or Android, Windows or web access.",
     body=f'''    {COMPARE_DISCLOSURE.format(other="TickTick")}
 
     <h2>Why choose Taven over TickTick</h2>
 {benefit("1. One answer instead of more views", "TickTick offers lists, a calendar, an Eisenhower matrix, a habit tracker and a focus timer — powerful, but every view is another place to look and another decision to make. Taven's on-device AI weighs importance, due dates and recurrence and puts one <strong>AI Suggested</strong> task at the top, with the reason why. Less looking, more doing.")}
-{benefit("2. Free, with no Premium paywall", "Taven is free with no subscription. Many of TickTick's standout features, including its full calendar views, require a Premium subscription.")}
+{benefit("2. Free, with no Premium paywall", "Taven is free with no subscription. Many of TickTick's standout features, including its full calendar views, require a Premium subscription. Taven's calendar is included free.")}
 {benefit("3. Private by design", "Taven has no accounts, no servers holding your tasks and no third-party SDKs, and it collects zero data. Its AI runs on your device. TickTick requires an account and syncs your tasks through its cloud.")}
 {benefit("4. Habits that live inside your tasks", "TickTick keeps habits in a separate tracker you maintain alongside your task list. In Taven, a recurring task <em>is</em> the habit: it gets its own streak and history automatically, and you can skip a day without losing track.")}
 {benefit("5. A calmer app", "Fewer features is a feature. Taven has less to configure, fewer places for tasks to hide and nothing pulling your attention away from the one thing you should be doing.")}
@@ -380,7 +380,7 @@ PAGES.append(dict(
         <tr><td>Habits</td><td><strong>Built into every recurring task</strong></td><td>Separate habit tracker</td></tr>
         <tr><td>Analytics</td><td>Completion rings, weekly charts, monthly heatmaps, daily intensity</td><td>Completion and focus statistics</td></tr>
         <tr><td>Focus timer</td><td>No</td><td>Built-in Pomodoro</td></tr>
-        <tr><td>Calendar views</td><td>No</td><td>Yes (fuller views on Premium)</td></tr>
+        <tr><td>Calendar</td><td><strong>Yes, free</strong></td><td>Yes (fuller views on Premium)</td></tr>
         <tr><td>Platforms</td><td>iPhone, iPad</td><td>iOS, Android, Mac, Windows, web</td></tr>
         <tr><td>Shared lists</td><td>No</td><td>Yes</td></tr>
       </tbody>
@@ -389,7 +389,7 @@ PAGES.append(dict(
     <h2>When TickTick might be the better fit</h2>
     <p>TickTick is a capable all-in-one app. It may suit you better if:</p>
     <ul>
-      <li>You want a <strong>Pomodoro focus timer</strong> or <strong>calendar view</strong> inside your task app.</li>
+      <li>You want a <strong>Pomodoro focus timer</strong> inside your task app.</li>
       <li>You need <strong>Android, Windows or web</strong> access — Taven is iPhone and iPad only.</li>
       <li>You <strong>share lists</strong> with other people.</li>
     </ul>
@@ -414,7 +414,7 @@ PAGES.append(dict(
         <li>You want habits tracked right inside your tasks</li>
       </ul></div>
       <div class="card frost"><h3>Stick with TickTick if…</h3><ul>
-        <li>You rely on a built-in Pomodoro timer or calendar</li>
+        <li>You rely on a built-in Pomodoro timer</li>
         <li>You need Android, Windows or web access</li>
         <li>You share lists with others</li>
       </ul></div>
@@ -449,4 +449,33 @@ FAQ = [
     ("Choosing an app", [
         ("Where can I compare Taven with other apps?", 'Read our <a href="/guides/best-task-manager-apps-iphone.html">iPhone task manager comparison</a>, the <a href="/guides/best-ai-to-do-list-apps.html">best AI to-do list apps</a>, or browse <a href="/guides/">all guides</a>.'),
     ]),
+]
+
+
+# ─────────────────────────────────────────────────────────────
+# What users like page (/what-users-like.html)
+# Based on real feedback the developer has received. Paraphrased themes, NOT quotes.
+# When you have real, permissioned quotes, add them to each theme's "quotes" list as
+# (quote_text, attribution) and they will appear on the page.
+USERS = [
+    dict(id="design", title="A simple, beautiful design",
+         said="The thing people mention first is how Taven looks and feels. Users tell us the interface is clean, calm and genuinely pleasant to open — no clutter, no maze of menus.",
+         why="A task app you enjoy opening is a task app you actually use. Taven's rounded, minimal design keeps attention on your tasks, and you can make it yours with your own accent color and a light, dark or system theme.",
+         link=("/features.html", "See all features"), quotes=[]),
+    dict(id="suggest", title="The Suggest feature",
+         said="Users love opening Taven and being told what to work on. The AI Suggested task at the top of the day takes away the “where do I even start?” moment.",
+         why="Taven's on-device AI weighs each task's importance, due date and recurrence, then picks one task and explains why — for example, “Due today and your top priority.” It runs privately on your iPhone or iPad.",
+         link=("/guides/what-task-to-do-next.html", "How to decide what to do next"), quotes=[]),
+    dict(id="harmony", title="Habits and one-time tasks, in harmony",
+         said="Most apps make you keep habits in one place and to-dos in another. Users tell us they love that Taven puts both side by side, so the morning run and the project deadline live in the same day.",
+         why="Every recurring task — daily, weekly, monthly or yearly — becomes a habit with its own streak and history, right alongside your one-time tasks. Skip a day without losing track, and add end dates when a habit has a finish line.",
+         link=("/compare/taven-vs-ticktick.html", "Taven vs. TickTick"), quotes=[]),
+    dict(id="calendar", title="The calendar",
+         said="Users like being able to see what's coming up on a calendar, with their tasks and habits laid out by date.",
+         why="Seeing the shape of your week makes it easier to plan realistically — and Taven's calendar is included free, with no premium tier.",
+         link=("/features.html", "Explore Taven's features"), quotes=[]),
+    dict(id="stats", title="Completion statistics",
+         said="Users enjoy watching their progress add up. The completion stats turn finished tasks into something you can see — and want to keep growing.",
+         why="Completion rings, weekly charts, monthly heatmaps, your completion rate and your best day show when you do your best work. The “Today's Intensity” gauge tells you when you've planned more than you can finish.",
+         link=("/features.html#features", "See the analytics"), quotes=[]),
 ]

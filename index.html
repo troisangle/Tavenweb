@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
   <title>Taven — AI To-Do List &amp; Task Manager for iPhone and iPad</title>
   <meta name="description" content="Taven is a free, privacy-first task manager for iPhone and iPad that tells you what to do next. On-device AI prioritizes your tasks — no account, no subscription, no data collection." />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
@@ -40,6 +41,7 @@
         "Smart recurring tasks (daily, weekly, monthly, yearly)",
         "Habit streaks",
         "Completion analytics, weekly charts and monthly heatmaps",
+        "Built-in calendar",
         "Optional private iCloud sync",
         "No account required",
         "No data collection"
@@ -78,21 +80,14 @@
        Keep in sync with privacy.html.
     ─────────────────────────────────────────────────────────── */
     :root {
+    color-scheme: light;
       --acc: #3d7bff;            --acc-rgb: 61, 123, 255;
       --opp-acc: #2453c9;        --opp-acc-rgb: 36, 83, 201;
-      --back: #b3b3b3;
+      --back: #f7f8fb;
       --opp-back: #333333;       --opp-back-rgb: 51, 51, 51;
-      --nav-bg: rgba(200, 204, 214, 0.72);
+      --nav-bg: rgba(255, 255, 255, 0.8);
       --font: ui-rounded, "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       --r-card: 15px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --opp-acc: #8fb2ff;      --opp-acc-rgb: 143, 178, 255;
-        --back: #333333;
-        --opp-back: #b3b3b3;     --opp-back-rgb: 179, 179, 179;
-        --nav-bg: rgba(44, 48, 58, 0.72);
-      }
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,7 +96,7 @@
       font-family: var(--font);
       color: var(--opp-back);
       background-color: var(--back);
-      background-image: linear-gradient(135deg, rgba(var(--acc-rgb), 0.3), var(--back) 70%);
+      background-image: linear-gradient(135deg, rgba(var(--acc-rgb), 0.12), var(--back) 60%);
       background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
@@ -113,7 +108,8 @@
     @media (min-width: 900px) { .container { padding: 0 48px; } }
 
     .frost {
-      background: rgba(var(--opp-back-rgb), 0.1);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 1px 2px rgba(20, 30, 60, 0.04), 0 8px 24px rgba(20, 30, 60, 0.05);
       border: 2px solid rgba(var(--opp-acc-rgb), 0.15);
       border-radius: var(--r-card);
     }
@@ -143,7 +139,9 @@
     }
     .nav-links a:hover { background: rgba(var(--opp-back-rgb), 0.1); color: var(--opp-back); }
     .nav-links a[aria-current="page"] { color: var(--opp-acc); }
-    @media (max-width: 720px) { .nav-links { display: none; } }
+    .nav-links a { white-space: nowrap; }
+    @media (max-width: 1120px) { .nav-links { gap: 0; } .nav-links a { padding: 8px 10px; font-size: 14px; } }
+    @media (max-width: 900px) { .nav-links { display: none; } }
 
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
@@ -278,6 +276,7 @@
       <ul class="nav-links">
         <li><a href="/" aria-current="page">Product</a></li>
         <li><a href="/features.html">Features</a></li>
+        <li><a href="/what-users-like.html">What users like</a></li>
         <li><a href="/guides/">Guides</a></li>
         <li><a href="/faq.html">FAQ</a></li>
         <li><a href="/privacy.html">Privacy</a></li>
@@ -423,6 +422,7 @@
         <h4>Product</h4>
         <ul>
           <li><a href="/features.html">Features</a></li>
+          <li><a href="/what-users-like.html">What users like</a></li>
           <li><a href="/faq.html">FAQ</a></li>
           <li><a href="https://apps.apple.com/app/id6761032737">Download</a></li>
         </ul>

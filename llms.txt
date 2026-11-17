@@ -18,12 +18,18 @@ Key facts:
 - Habits and streaks: every recurring task becomes a habit with its own streak and history; skipping a day doesn't lose track.
 - Analytics: completion rings, weekly charts, monthly heatmaps, completion rate, best day and a "Today's Intensity" workload gauge.
 - iCloud sync across the user's Apple devices (optional, private to the user).
+- Calendar: see tasks and habits laid out by date, included free.
 - Personalization: accent colors and light, dark or system themes.
+
+## What users like
+
+The things Taven users mention most in their feedback: the simple, aesthetic design; the AI Suggest feature that picks the next task; habits and one-time tasks living together in one list; the calendar; and the task completion statistics.
 
 ## Pages
 
 - [Home](https://tavenproductivity.com/): product overview
 - [Features](https://tavenproductivity.com/features.html): everything Taven does, in detail
+- [What users like](https://tavenproductivity.com/what-users-like.html): the features users mention most in their feedback
 - [FAQ](https://tavenproductivity.com/faq.html): pricing, devices, privacy, accounts and how Taven picks your next task
 - [Privacy policy](https://tavenproductivity.com/privacy.html): exactly how Taven handles data
 - [Guides](https://tavenproductivity.com/guides/): all guides and comparisons
