@@ -10,6 +10,7 @@ APP = "https://apps.apple.com/app/id6761032737"
 UPDATED_ISO = "2026-11-17"
 UPDATED_TXT = "November 17, 2026"
 
+MOBILE_MENU = '<details class="menu"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><ul><li><a href="/">Product</a></li><li><a href="/features.html">Features</a></li><li><a href="/user-response.html">User response</a></li><li><a href="/guides/">Guides</a></li><li><a href="/faq.html">FAQ</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="mailto:tavenproductivity@gmail.com">Contact</a></li></ul></details>'
 CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
 
 def esc(s): return html.escape(s, quote=True)
@@ -28,14 +29,17 @@ def nav(current):
       <ul class="nav-links">
         {li("/", "Product", "home")}
         {li("/features.html", "Features", "features")}
-        {li("/what-users-like.html", "What users like", "users")}
+        {li("/user-response.html", "User response", "users")}
         {li("/guides/", "Guides", "guides")}
         {li("/faq.html", "FAQ", "faq")}
         {li("/privacy.html", "Privacy", "privacy")}
         {li("mailto:tavenproductivity@gmail.com", "Contact", "contact")}
       </ul>
     </nav>
-    <a href="{APP}" class="btn btn-primary btn-sm">Download</a>
+    <div class="nav-right">
+      <a href="{APP}" class="btn btn-primary btn-sm">Download</a>
+      {MOBILE_MENU}
+    </div>
   </div>
 </header>'''
 
@@ -53,7 +57,7 @@ FOOTER = f'''<footer class="footer">
         <h4>Product</h4>
         <ul>
           <li><a href="/features.html">Features</a></li>
-          <li><a href="/what-users-like.html">What users like</a></li>
+          <li><a href="/user-response.html">User response</a></li>
           <li><a href="/faq.html">FAQ</a></li>
           <li><a href="{APP}">Download</a></li>
         </ul>
@@ -282,28 +286,17 @@ def render_faq():
     open(os.path.join(ROOT, "faq.html"), "w").write(out)
 
 def render_users():
-    from content import USERS
-    url = SITE + "/what-users-like.html"
-    title = "What Users Like About Taven — Design, AI Suggestions, Habits, Calendar & Stats"
-    desc = "What Taven users tell us they love: the simple, aesthetic design, the AI Suggest feature, habits and one-time tasks together, the calendar and completion statistics."
-    jsonld = {"@context": "https://schema.org", "@type": "WebPage", "name": "What users like about Taven",
-              "url": url, "description": desc, "publisher": ORG,
+    from content import USERS, ICONS
+    url = SITE + "/user-response.html"
+    title = "User Response — What People Love About Taven"
+    desc = "What Taven users tell us they love most: the simple, beautiful design, the Suggest feature, habits and tasks together, the calendar and completion stats."
+    jsonld = {"@context": "https://schema.org", "@type": "WebPage", "name": "User response", "url": url,
+              "description": desc, "publisher": ORG,
               "about": {"@type": "MobileApplication", "name": "Taven", "operatingSystem": "iOS, iPadOS", "url": SITE + "/"}}
-    jump = "".join(f'<a class="chip" href="#{t["id"]}">{t["title"]}</a>' for t in USERS)
-    blocks = []
-    for i, t in enumerate(USERS, 1):
-        quotes = "".join(f'<blockquote class="quote"><p>“{esc(q)}”</p><cite>— {esc(who)}</cite></blockquote>' for q, who in t["quotes"])
-        blocks.append(f"""    <section class="theme frost" id="{t["id"]}">
-      <div class="theme-n">{i:02d}</div>
-      <div>
-        <h2>{t["title"]}</h2>
-        <h3>What users tell us</h3>
-        <p>{t["said"]}</p>{quotes}
-        <h3>Why it matters</h3>
-        <p>{t["why"]}</p>
-        <p><a href="{t["link"][0]}">{t["link"][1]} →</a></p>
-      </div>
-    </section>""")
+    cards = []
+    for t in USERS:
+        quotes = "".join(f'<blockquote class="quote">“{esc(q)}”<cite>{esc(who)}</cite></blockquote>' for q, who in t["quotes"])
+        cards.append(f'      <article class="love frost"><div class="love-icon">{ICONS[t["icon"]]}</div><h2>{t["title"]}</h2><p>{t["text"]}</p>{quotes}</article>')
     page_head = head(title, desc, url, jsonld).replace('content="article"', 'content="website"')
     out = f"""{page_head}
 <body>
@@ -312,35 +305,40 @@ def render_users():
 
 <main class="container">
   <section class="page-head">
-    <div class="label">What users like</div>
-    <h1 class="h1">Why people <span>stick with</span> Taven.</h1>
-    <p class="lede">We read every message we get. These are the five things Taven users bring up most.</p>
-    <div class="chips">{jump}</div>
+    <div class="label">User response</div>
+    <h1 class="h1">What people <span>love</span> about Taven.</h1>
+    <p class="lede">We read every message. These are the five things users bring up most.</p>
   </section>
 
-  <div class="themes">
-{chr(10).join(blocks)}
-  </div>
+  <section class="loves">
+{chr(10).join(cards)}
+  </section>
 
   <section class="share frost">
     <div>
-      <h2>Tell us what you like</h2>
-      <p>Using Taven? A quick App Store review helps other people find it, and we read every email.</p>
+      <h2>Using Taven?</h2>
+      <p>Tell us what you think. A quick App Store review helps others find it.</p>
     </div>
     <div class="share-actions">
       <a class="btn btn-primary" href="{APP}?action=write-review">Write a review</a>
       <a class="btn btn-ghost" href="mailto:tavenproductivity@gmail.com">Email us</a>
     </div>
   </section>
-
-  {CTA}
 </main>
 
 {FOOTER}
 </body>
 </html>
 """
-    open(os.path.join(ROOT, "what-users-like.html"), "w").write(out)
+    open(os.path.join(ROOT, "user-response.html"), "w").write(out)
+    # Old address redirects to the new one
+    old = f"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8" /><title>User response — Taven</title>
+<link rel="canonical" href="{url}" /><meta name="robots" content="noindex, follow" />
+<meta http-equiv="refresh" content="0; url=/user-response.html" /></head>
+<body><p>This page moved to <a href="/user-response.html">User response</a>.</p></body></html>
+"""
+    open(os.path.join(ROOT, "what-users-like.html"), "w").write(old)
 
 if __name__ == "__main__":
     for p in PAGES:

@@ -306,7 +306,7 @@ PAGES.append(dict(
       <li>You <strong>share projects with a team</strong> and need assignees and comments.</li>
       <li>You depend on <strong>integrations</strong> with tools like Slack, email or your calendar.</li>
     </ul>
-    <p>If you mostly use Todoist for your own tasks on an iPhone or iPad, none of those apply — and Taven will likely save you both time and money.</p>
+    <p>If you mostly use Todoist for your own tasks on an iPhone or iPad, none of those apply — and Taven will likely save you both time and money. See <a href="/user-response.html">what Taven users love most</a>.</p>
 
     <h2>Switching from Todoist to Taven</h2>
     <ol>
@@ -393,7 +393,7 @@ PAGES.append(dict(
       <li>You need <strong>Android, Windows or web</strong> access — Taven is iPhone and iPad only.</li>
       <li>You <strong>share lists</strong> with other people.</li>
     </ul>
-    <p>If what you actually want is to stop deliberating and start working, Taven's focus on one clear next step is the advantage.</p>
+    <p>If what you actually want is to stop deliberating and start working, Taven's focus on one clear next step is the advantage. See <a href="/user-response.html">what Taven users love most</a>.</p>
 
     <h2>Switching from TickTick to Taven</h2>
     <ol>
@@ -447,35 +447,33 @@ FAQ = [
         ("Is my data private?", 'Yes. Your tasks stay on your device, Taven\'s AI runs on-device, and Taven collects zero data and includes no third-party SDKs. <a href="/privacy.html">Read the privacy policy</a>.'),
     ]),
     ("Choosing an app", [
+        ("What do users like most about Taven?", 'Users most often mention the simple, beautiful design, the Suggest feature, having habits and one-time tasks together, the calendar and the completion stats. <a href="/user-response.html">See user response</a>.'),
         ("Where can I compare Taven with other apps?", 'Read our <a href="/guides/best-task-manager-apps-iphone.html">iPhone task manager comparison</a>, the <a href="/guides/best-ai-to-do-list-apps.html">best AI to-do list apps</a>, or browse <a href="/guides/">all guides</a>.'),
     ]),
 ]
 
 
 # ─────────────────────────────────────────────────────────────
-# What users like page (/what-users-like.html)
-# Based on real feedback the developer has received. Paraphrased themes, NOT quotes.
-# When you have real, permissioned quotes, add them to each theme's "quotes" list as
-# (quote_text, attribution) and they will appear on the page.
+# User response page (/user-response.html)
+# Themes from real feedback the developer has received — paraphrased, NOT quotes.
+# To show a real, permissioned quote on a card, add it to that card's "quotes"
+# list as (quote_text, attribution), e.g. ("Love the habit streaks.", "Sam, App Store").
+ICONS = {
+    "design": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2l2.2 6.3L18.5 10.5 12.2 12.7 10 19l-2.2-6.3L1.5 10.5l6.3-2.2zM19 14l1 2.8 2.8 1-2.8 1L19 21.6l-1-2.8-2.8-1 2.8-1z"/></svg>',
+    "suggest": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+    "habits": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg>',
+    "calendar": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+    "stats": '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>',
+}
 USERS = [
-    dict(id="design", title="A simple, beautiful design",
-         said="The thing people mention first is how Taven looks and feels. Users tell us the interface is clean, calm and genuinely pleasant to open — no clutter, no maze of menus.",
-         why="A task app you enjoy opening is a task app you actually use. Taven's rounded, minimal design keeps attention on your tasks, and you can make it yours with your own accent color and a light, dark or system theme.",
-         link=("/features.html", "See all features"), quotes=[]),
-    dict(id="suggest", title="The Suggest feature",
-         said="Users love opening Taven and being told what to work on. The AI Suggested task at the top of the day takes away the “where do I even start?” moment.",
-         why="Taven's on-device AI weighs each task's importance, due date and recurrence, then picks one task and explains why — for example, “Due today and your top priority.” It runs privately on your iPhone or iPad.",
-         link=("/guides/what-task-to-do-next.html", "How to decide what to do next"), quotes=[]),
-    dict(id="harmony", title="Habits and one-time tasks, in harmony",
-         said="Most apps make you keep habits in one place and to-dos in another. Users tell us they love that Taven puts both side by side, so the morning run and the project deadline live in the same day.",
-         why="Every recurring task — daily, weekly, monthly or yearly — becomes a habit with its own streak and history, right alongside your one-time tasks. Skip a day without losing track, and add end dates when a habit has a finish line.",
-         link=("/compare/taven-vs-ticktick.html", "Taven vs. TickTick"), quotes=[]),
-    dict(id="calendar", title="The calendar",
-         said="Users like being able to see what's coming up on a calendar, with their tasks and habits laid out by date.",
-         why="Seeing the shape of your week makes it easier to plan realistically — and Taven's calendar is included free, with no premium tier.",
-         link=("/features.html", "Explore Taven's features"), quotes=[]),
-    dict(id="stats", title="Completion statistics",
-         said="Users enjoy watching their progress add up. The completion stats turn finished tasks into something you can see — and want to keep growing.",
-         why="Completion rings, weekly charts, monthly heatmaps, your completion rate and your best day show when you do your best work. The “Today's Intensity” gauge tells you when you've planned more than you can finish.",
-         link=("/features.html#features", "See the analytics"), quotes=[]),
+    dict(icon="design", title="Simple, beautiful design",
+         text="The first thing people mention. Clean, calm and genuinely nice to open — no clutter, no maze of menus.", quotes=[]),
+    dict(icon="suggest", title="The Suggest feature",
+         text="Open the app and Taven tells you what to work on, with the reason why. No more staring at a long list.", quotes=[]),
+    dict(icon="habits", title="Habits and tasks together",
+         text="Your morning run and your project deadline live in the same day. Every recurring task keeps its own streak.", quotes=[]),
+    dict(icon="calendar", title="The calendar",
+         text="See what's coming up, with tasks and habits laid out by date. Included free.", quotes=[]),
+    dict(icon="stats", title="Completion stats",
+         text="Rings, weekly charts and heatmaps turn finished tasks into progress you can see — and want to keep growing.", quotes=[]),
 ]

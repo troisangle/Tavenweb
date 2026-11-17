@@ -228,7 +228,8 @@
 
     /* ── EXPLORE TILES (home) ── */
     .explore { display: grid; grid-template-columns: 1fr; gap: 18px; }
-    @media (min-width: 760px) { .explore { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 640px) { .explore { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .explore { grid-template-columns: repeat(4, 1fr); } }
     .tile { display: flex; flex-direction: column; padding: 26px; text-decoration: none; transition: transform .15s, border-color .2s; }
     .tile:hover { transform: translateY(-2px); border-color: rgba(var(--opp-acc-rgb), .4); }
     .tile h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
@@ -262,6 +263,17 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
     }
+
+    /* MOBILE MENU */
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .menu { position: relative; display: none; }
+    @media (max-width: 900px) { .menu { display: block; } }
+    .menu summary { list-style: none; cursor: pointer; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(var(--opp-back-rgb), .08); }
+    .menu summary::-webkit-details-marker { display: none; }
+    .menu summary svg { width: 22px; height: 22px; }
+    .menu ul { position: absolute; right: 0; top: 50px; min-width: 200px; list-style: none; padding: 8px; border-radius: 14px; background: #fff; border: 1px solid rgba(var(--opp-acc-rgb), .15); box-shadow: 0 12px 32px rgba(20, 30, 60, .14); }
+    .menu a { display: block; padding: 11px 14px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700; color: var(--opp-back); }
+    .menu a:hover { background: rgba(var(--acc-rgb), .1); color: var(--opp-acc); }
   </style>
 </head>
 <body>
@@ -276,14 +288,17 @@
       <ul class="nav-links">
         <li><a href="/" aria-current="page">Product</a></li>
         <li><a href="/features.html">Features</a></li>
-        <li><a href="/what-users-like.html">What users like</a></li>
+        <li><a href="/user-response.html">User response</a></li>
         <li><a href="/guides/">Guides</a></li>
         <li><a href="/faq.html">FAQ</a></li>
         <li><a href="/privacy.html">Privacy</a></li>
         <li><a href="mailto:tavenproductivity@gmail.com">Contact</a></li>
       </ul>
     </nav>
-    <a href="https://apps.apple.com/app/id6761032737" class="btn btn-primary btn-sm">Download</a>
+    <div class="nav-right">
+      <a href="https://apps.apple.com/app/id6761032737" class="btn btn-primary btn-sm">Download</a>
+      <details class="menu"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><ul><li><a href="/">Product</a></li><li><a href="/features.html">Features</a></li><li><a href="/user-response.html">User response</a></li><li><a href="/guides/">Guides</a></li><li><a href="/faq.html">FAQ</a></li><li><a href="/privacy.html">Privacy</a></li><li><a href="mailto:tavenproductivity@gmail.com">Contact</a></li></ul></details>
+    </div>
   </div>
 </header>
 
@@ -392,6 +407,11 @@
         <p>How to decide what to do next, beat to-do list overwhelm and pick the right task app.</p>
         <span class="go">Read the guides →</span>
       </a>
+      <a class="tile frost" href="/user-response.html">
+        <h3>User response</h3>
+        <p>The design, the Suggest feature, habits, the calendar and stats — what users love most.</p>
+        <span class="go">See what users say →</span>
+      </a>
       <a class="tile frost" href="/privacy.html">
         <h3>Privacy</h3>
         <p>No accounts, no tracking, no third-party SDKs. Your tasks never leave your devices.</p>
@@ -422,7 +442,7 @@
         <h4>Product</h4>
         <ul>
           <li><a href="/features.html">Features</a></li>
-          <li><a href="/what-users-like.html">What users like</a></li>
+          <li><a href="/user-response.html">User response</a></li>
           <li><a href="/faq.html">FAQ</a></li>
           <li><a href="https://apps.apple.com/app/id6761032737">Download</a></li>
         </ul>
